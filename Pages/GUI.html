@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FISHING MACRO V2.3</title>
+    <title>FISHING MACRO V2.4</title>
     <style>
         :root {
             --bg-primary: #0a0520;
@@ -335,13 +335,16 @@
             background: rgba(0, 0, 0, 0.9);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 15px;
-            margin: 15% auto;
-            padding: 20px;
-            width: 90%;
-            max-width: 400px;
+            margin: 80% auto;
+            transform: translateY(-50%);
+            padding: 15px;
+            width: 85%;
+            max-width: 300px;
             color: #ffffff;
             text-align: center;
             animation: slideIn 0.3s ease-out;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         .modal h2 {
@@ -433,11 +436,15 @@
     <div class="main-content">
         <div class="container"></div>
 
-        <p>FISHING MACRO V2.3</p>
+        <p>FISHING MACRO V2.4</p>
 
         <div class="button-row">
             <button class="input" id="startMacro">Start Macro</button>
             <button class="input" id="reloadMacro">Reload Macro</button>
+        </div>
+
+        <div class="button-row button-row-center">
+            <button class="input button-single" id="viewStats">📊 View Statistics</button>
         </div>
 
         <div class="input-group">
@@ -504,8 +511,6 @@
             <input type="number" id="fishTriggerConfidence" class="input" style="padding: 10px 0.5rem; font-size: 15px; width: 80px; display: block; margin: 0 auto;" min="0" max="100" value="60">
         </div>
 
-        <div class="separator"></div>
-
         <div class="button-row button-row-center">
             <button class="input button-single" id="keybindsToggle">Keybinds</button>
         </div>
@@ -565,8 +570,6 @@
             </div>
         </div>
 
-        <div class="separator"></div>
-
         <div id="licenseBox" class="license-box">
             <div id="licenseStatus" class="license-status">Status: ...</div>
             <div id="licenseTime" class="license-time">Time remaining: ...</div>
@@ -580,14 +583,14 @@
             <div class="modal-content">
                 <h2>Trial Expired</h2>
                 <p>Your 12-hour trial has expired. Click the link below to download to reset your trial.</p>
-                <p><a href="https://github.com/Vunoxoulia/AOFishingMacro/tree/main" target="_blank" style="color: #FEBF00; text-decoration: underline;">Download Latest Version</a></p>
-                <p>After downloading and replacing the file, restart the macro to get a fresh 12-hour trial.</p>
+                <p><a href="https://github.com/Vunoxoulia/AOFishingMacro" target="_blank" style="color: #FEBF00; text-decoration: underline;">Download Latest Version</a></p>
+                <p>After downloading and replacing the file, restart the macro to get a fresh 3.5-hour trial.</p>
                 <button class="cancel-btn" onclick="closeModal()">Close</button>
             </div>
         </div>
 
         <div id="goPremiumModal" class="modal">
-            <div class="modal-content">
+            <div class="modal-content" style="max-width: 300px;">
                 <h2>Go Premium</h2>
                 <div id="goPremiumStep1">
                     <p>Are you sure? This will remove the timer.</p>
@@ -598,10 +601,86 @@
                     <p>Your premium serial and HWID (copy and send to developer):</p>
                     <p id="goPremiumInfo" style="font-weight: bold; font-size: 14px; background: #333; padding: 10px; border-radius: 5px;">Loading...</p>
                     <p>Enter the One-Time Password from the developer:</p>
-                    <input type="text" id="goPremiumOTP" placeholder="Enter OTP">
+                    <input type="text" id="goPremiumOTP" placeholder="Enter OTP" style="max-width: 250px; display: block; margin: 10px auto;">
                     <p id="goPremiumError" style="color: #ff6b6b; display: none;">Invalid OTP. Try again.</p>
                     <button class="unlock-btn" onclick="activateGoPremium()">Activate</button>
                     <button class="cancel-btn" onclick="closeGoPremiumModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="statisticsModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h2>📊 FISHING STATISTICS</h2>
+                <div id="statisticsContent">
+                    <div id="premiumStatsView" style="display: none;">
+                        <h3 style="color: var(--accent-cyan); margin-top: 20px; margin-bottom: 10px;">Current Session</h3>
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span>🐟 Fish</span>
+                                <span id="sessionFish" style="color: var(--accent-cyan); font-weight: bold;">0</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span>⚙️ Sunken Items</span>
+                                <span id="sessionSunken" style="color: var(--accent-cyan); font-weight: bold;">0</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span>🗑️ Junk</span>
+                                <span id="sessionJunk" style="color: var(--accent-cyan); font-weight: bold;">0</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>💎 Treasure</span>
+                                <span id="sessionTreasure" style="color: var(--accent-cyan); font-weight: bold;">0</span>
+                            </div>
+                            <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 10px; padding-top: 10px; display: flex; justify-content: space-between;">
+                                <span style="font-weight: bold;">Total Caught</span>
+                                <span id="sessionTotal" style="color: var(--accent-purple); font-weight: bold;">0</span>
+                            </div>
+                        </div>
+
+                        <h3 style="color: var(--accent-cyan); margin-top: 20px; margin-bottom: 10px;">Overall Total (All Sessions)</h3>
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span>🐟 Fish</span>
+                                <span id="totalFish" style="color: var(--accent-cyan); font-weight: bold;">0</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span>⚙️ Sunken Items</span>
+                                <span id="totalSunken" style="color: var(--accent-cyan); font-weight: bold;">0</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span>🗑️ Junk</span>
+                                <span id="totalJunk" style="color: var(--accent-cyan); font-weight: bold;">0</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>💎 Treasure</span>
+                                <span id="totalTreasure" style="color: var(--accent-cyan); font-weight: bold;">0</span>
+                            </div>
+                            <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 10px; padding-top: 10px; display: flex; justify-content: space-between;">
+                                <span style="font-weight: bold;">Grand Total</span>
+                                <span id="grandTotal" style="color: var(--accent-purple); font-weight: bold;">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="goPremiumStatsView" style="text-align: center;">
+                        <p style="font-size: 16px; margin: 3px 0;">Track your fishing progress with detailed statistics!</p>
+                        <div style="background: linear-gradient(135deg, #FEBF00, #FFA500); color: #001217; padding: 15px; border-radius: 8px; margin: 20px 0; font-weight: bold;">
+                            ✨ Premium Feature ✨
+                        </div>
+                        <p>Statistics logging is exclusive to premium users. Unlock premium to:</p>
+                        <ul style="text-align: left; font-size: 13px; opacity: 0.8; margin: 15px 0;">
+                            <li>✓ Track fish, sunken items, junk, and treasures</li>
+                            <li>✓ View current session statistics</li>
+                            <li>✓ Monitor overall lifetime totals</li>
+                            <li>✓ No More Timer</li>
+                        </ul>
+                        <button class="unlock-btn" onclick="premiumAction()" style="width: 100%; margin-bottom: 10px;">🔓 GO PREMIUM NOW</button>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px; text-align: center;">
+                    <button class="cancel-btn" onclick="closeStatisticsModal()" style="width: 100%;">Close</button>
                 </div>
             </div>
         </div>
@@ -709,69 +788,81 @@
             const statusEl = document.getElementById("licenseStatus");
             const timeEl = document.getElementById("licenseTime");
             const btn = document.getElementById("premiumBtn");
-            if (remainingSeconds === -1 || license.status === "Premium") {
-                statusEl.textContent = "Status: Premium";
-                timeEl.textContent = "Time remaining: Unlimited";
-                btn.textContent = "Remove Premium";
-                closeModal();
-            } else if (remainingSeconds > 0) {
-                statusEl.textContent = "Status: Free Trial";
-                const min = Math.floor(remainingSeconds / 60);
-                const sec = remainingSeconds % 60;
-                timeEl.textContent = "Time remaining: " + String(min).padStart(2, "0") + ":" + String(sec).padStart(2, "0");
-                btn.textContent = "Go Premium";
-                closeModal();
-            } else {
-                statusEl.textContent = "Status: Trial Expired";
-                timeEl.textContent = "Time remaining: 00:00";
-                btn.textContent = "Go Premium";
-            }
+            
+            window.chrome.webview.hostObjects.MacroFuncs.getIsPremium().then(isPremium => {
+                if (isPremium || (license && license.status === "Premium")) {
+                    statusEl.textContent = "Status: Premium";
+                    timeEl.textContent = "Time remaining: Unlimited";
+                    btn.textContent = "Remove Premium";
+                    closeModal();
+                } else if (remainingSeconds > 0) {
+                    statusEl.textContent = "Status: Free Trial";
+                    const min = Math.floor(remainingSeconds / 60);
+                    const sec = remainingSeconds % 60;
+                    timeEl.textContent = "Time remaining: " + String(min).padStart(2, "0") + ":" + String(sec).padStart(2, "0");
+                    btn.textContent = "Go Premium";
+                    closeModal();
+                } else {
+                    statusEl.textContent = "Status: Trial Expired";
+                    timeEl.textContent = "Time remaining: 00:00";
+                    btn.textContent = "Go Premium";
+                }
+            }).catch(err => {
+                console.error('Error getting premium status:', err);
+                if (license && license.status === "Premium") {
+                    statusEl.textContent = "Status: Premium";
+                    timeEl.textContent = "Time remaining: Unlimited";
+                    btn.textContent = "Remove Premium";
+                } else {
+                    statusEl.textContent = "Status: Trial Expired";
+                    timeEl.textContent = "Time remaining: 00:00";
+                    btn.textContent = "Go Premium";
+                }
+            });
         }
 
         async function showModal() {
             console.log('Showing trial modal...');
             try {
-                document.getElementById('trialModal').style.display = 'block';
+                const modal = document.getElementById('trialModal');
+                modal.style.display = 'block';
+                modal.style.pointerEvents = 'auto';
+                const content = modal.querySelector('.modal-content');
+                if (content) {
+                    content.style.pointerEvents = 'auto';
+                }
             } catch (e) {
                 console.error('Error showing modal:', e);
             }
         }
 
-        function closeModal() {
-            document.getElementById('trialModal').style.display = 'none';
-        }
-
         document.getElementById('startMacro').addEventListener('click', async (e) => {
             console.log('Start Macro clicked - DEBUG');
             try {
-                const [license, remaining] = await Promise.all([
-                    window.chrome.webview.hostObjects.MacroFuncs.getLicenseStatus(),
-                    window.chrome.webview.hostObjects.MacroFuncs.getAOVunoxTrialRemainingTime()
-                ]);
-                console.log('License status:', license, 'Remaining seconds:', remaining);
-
-                const isExpired = (
-                    (license && (license.status === 'Expired' || license.status === 'Trial Expired')) ||
-                    (typeof remaining === 'number' && remaining <= 0 && !(license && license.status === 'Premium'))
-                );
-
-                if (isExpired) {
-                    console.log('Showing modal for expired trial');
+                const statusText = document.getElementById('licenseStatus').textContent;
+                const isPremium = await window.chrome.webview.hostObjects.MacroFuncs.getIsPremium().catch(() => false);
+                
+                if (!isPremium && (statusText.includes('Trial Expired') || statusText.includes('Expired'))) {
+                    console.log('Trial expired (checking license status display)');
                     showModal();
                 } else {
-                    console.log('Starting macro (not expired)');
+                    console.log('Starting macro (not expired or premium)');
                     callAHK('start');
                 }
             } catch (error) {
-                console.error('Error checking license:', error);
-                showToast('Error checking license. Check console.');
-                showModal();
+                console.error('Error in start macro:', error);
+                showToast('Error starting macro. Check console.');
             }
             e.target.blur();
         });
 
         document.getElementById('reloadMacro').addEventListener('click', (e) => {
             callAHK('reload');
+            e.target.blur();
+        });
+
+        document.getElementById('viewStats').addEventListener('click', (e) => {
+            showStatisticsModal();
             e.target.blur();
         });
 
@@ -920,17 +1011,19 @@
             const modal = document.getElementById(modalId);
             if (modal) {
                 modal.style.display = 'none';
+                modal.style.pointerEvents = 'none';
                 if (modalId === 'removalModal') {
                     modal.remove();
                 }
             }
         }
 
-        function showGoPremiumModal() {
-            document.getElementById('goPremiumModal').style.display = 'block';
-            document.getElementById('goPremiumError').style.display = 'none';
-            loadGoPremiumInfo();
-        }
+function showGoPremiumModal() {
+    closeStatisticsModal();
+    document.getElementById('goPremiumModal').style.display = 'block';
+    document.getElementById('goPremiumError').style.display = 'none';
+    loadGoPremiumInfo();
+}
 
         async function loadGoPremiumInfo() {
             try {
@@ -974,6 +1067,7 @@
         function closeGoPremiumModal() {
             document.getElementById('goPremiumModal').style.display = 'none';
         }
+
         (function waitForHost() {
             const MAX_DELAY = 20000;
             let delay = 100;
@@ -1029,6 +1123,84 @@
                 toast.classList.remove('show');
                 setTimeout(() => document.body.removeChild(toast), 300);
             }, 500);
+        }
+
+        async function showStatisticsModal() {
+            try {
+                // Get premium status from AHK
+                let isPremium = false;
+                try {
+                    isPremium = await window.chrome.webview.hostObjects.MacroFuncs.getIsPremium();
+                } catch (e) {
+                    console.error('Could not get premium status:', e);
+                    isPremium = false;
+                }
+                
+                if (isPremium) {
+                    // Get all stats
+                    let fishCaught = 0, sunkenCaught = 0, junkCaught = 0, treasureCaught = 0;
+                    let fishTotal = 0, sunkenTotal = 0, junkTotal = 0, treasureTotal = 0;
+                    
+                    try {
+                        fishCaught = await window.chrome.webview.hostObjects.MacroFuncs.getSessionFish();
+                    } catch (e) {}
+                    try {
+                        sunkenCaught = await window.chrome.webview.hostObjects.MacroFuncs.getSessionSunken();
+                    } catch (e) {}
+                    try {
+                        junkCaught = await window.chrome.webview.hostObjects.MacroFuncs.getSessionJunk();
+                    } catch (e) {}
+                    try {
+                        treasureCaught = await window.chrome.webview.hostObjects.MacroFuncs.getSessionTreasure();
+                    } catch (e) {}
+                    try {
+                        fishTotal = await window.chrome.webview.hostObjects.MacroFuncs.getFishTotal();
+                    } catch (e) {}
+                    try {
+                        sunkenTotal = await window.chrome.webview.hostObjects.MacroFuncs.getSunkenTotal();
+                    } catch (e) {}
+                    try {
+                        junkTotal = await window.chrome.webview.hostObjects.MacroFuncs.getJunkTotal();
+                    } catch (e) {}
+                    try {
+                        treasureTotal = await window.chrome.webview.hostObjects.MacroFuncs.getTreasureTotal();
+                    } catch (e) {}
+                    
+                    // Update UI with stats
+                    document.getElementById('sessionFish').textContent = fishCaught || 0;
+                    document.getElementById('sessionSunken').textContent = sunkenCaught || 0;
+                    document.getElementById('sessionJunk').textContent = junkCaught || 0;
+                    document.getElementById('sessionTreasure').textContent = treasureCaught || 0;
+                    
+                    const sessionTotal = (fishCaught || 0) + (sunkenCaught || 0) + (junkCaught || 0) + (treasureCaught || 0);
+                    document.getElementById('sessionTotal').textContent = sessionTotal;
+                    
+                    document.getElementById('totalFish').textContent = fishTotal || 0;
+                    document.getElementById('totalSunken').textContent = sunkenTotal || 0;
+                    document.getElementById('totalJunk').textContent = junkTotal || 0;
+                    document.getElementById('totalTreasure').textContent = treasureTotal || 0;
+                    
+                    const grandTotal = (fishTotal || 0) + (sunkenTotal || 0) + (junkTotal || 0) + (treasureTotal || 0);
+                    document.getElementById('grandTotal').textContent = grandTotal;
+                    
+                    document.getElementById('premiumStatsView').style.display = 'block';
+                    document.getElementById('goPremiumStatsView').style.display = 'none';
+                } else {
+                    document.getElementById('premiumStatsView').style.display = 'none';
+                    document.getElementById('goPremiumStatsView').style.display = 'block';
+                }
+                
+                document.getElementById('statisticsModal').style.display = 'block';
+            } catch (e) {
+                console.error('Error showing statistics:', e);
+                document.getElementById('goPremiumStatsView').style.display = 'block';
+                document.getElementById('premiumStatsView').style.display = 'none';
+                document.getElementById('statisticsModal').style.display = 'block';
+            }
+        }
+
+        function closeStatisticsModal() {
+            document.getElementById('statisticsModal').style.display = 'none';
         }
     </script>
 </body>
