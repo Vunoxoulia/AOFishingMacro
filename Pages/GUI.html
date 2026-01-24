@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="auto">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FISHING MACRO V2.4</title>
+    <title>FISHING MACRO V2.5</title>
     <style>
         :root {
             --bg-primary: #0a0520;
             --accent-cyan: #00bfff;
             --accent-purple: #8a2be2;
-            --panel-bg: rgba(255,255,255,0.04);
-            --muted: rgba(255,255,255,0.95);
-            --glass: rgba(255,255,255,0.06);
+            --panel-bg: rgba(255, 255, 255, 0.04);
+            --muted: rgba(255, 255, 255, 0.95);
+            --glass: rgba(255, 255, 255, 0.06);
             --btn-text: #001217;
-            --max-width: 420px;
+            --max-width: 380px
         }
 
-        html, body {
+        html,
+        body {
             margin: 0;
             padding: 0;
             width: 100%;
@@ -40,8 +42,8 @@
             width: 100%;
             height: 100%;
             background: radial-gradient(ellipse at 20% 30%, rgba(138, 43, 226, 0.45) 0%, rgba(138, 43, 226, 0) 55%),
-                        radial-gradient(ellipse at 80% 50%, rgba(0, 191, 255, 0.45) 0%, rgba(0, 191, 255, 0) 65%),
-                        linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(10,5,32,0.9) 100%);
+                radial-gradient(ellipse at 80% 50%, rgba(0, 191, 255, 0.45) 0%, rgba(0, 191, 255, 0) 65%),
+                linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(10, 5, 32, 0.9) 100%);
             background-blend-mode: overlay, screen;
             overflow: hidden;
             animation: aurora-drift 40s infinite alternate ease-in-out;
@@ -72,20 +74,47 @@
         }
 
         @keyframes aurora-drift {
-            0% { background-position: 0% 0%, 0% 0%; filter: hue-rotate(0deg) brightness(0.98); }
-            50% { background-position: -6% -3%, 4% 6%; filter: hue-rotate(25deg) brightness(1.02); }
-            100% { background-position: 4% 8%, -6% -3%; filter: hue-rotate(50deg) brightness(0.98); }
+            0% {
+                background-position: 0% 0%, 0% 0%;
+                filter: hue-rotate(0deg) brightness(0.98);
+            }
+
+            50% {
+                background-position: -6% -3%, 4% 6%;
+                filter: hue-rotate(25deg) brightness(1.02);
+            }
+
+            100% {
+                background-position: 4% 8%, -6% -3%;
+                filter: hue-rotate(50deg) brightness(0.98);
+            }
         }
 
         @keyframes grid-shift {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-20%, -20%); }
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(-20%, -20%);
+            }
         }
 
         @keyframes aurora-pulse {
-            0% { opacity: 0.9; transform: scale(1); }
-            50% { opacity: 0.75; transform: scale(1.02); }
-            100% { opacity: 0.9; transform: scale(1); }
+            0% {
+                opacity: 0.9;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.75;
+                transform: scale(1.02);
+            }
+
+            100% {
+                opacity: 0.9;
+                transform: scale(1);
+            }
         }
 
         .ahk-titleBar {
@@ -94,14 +123,14 @@
             width: 95%;
             display: flex;
             align-items: center;
-            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.12));
             height: 28px;
             flex-shrink: 0;
             position: relative;
             z-index: 20;
             padding: 0 8px;
             gap: px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.45);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
         }
 
         .ahk-title-btn {
@@ -126,14 +155,39 @@
             color: #ffffff;
         }
 
-        body .ahk-title-btn-restore { display: none; }
-        body.ahk-maximized .ahk-title-btn-restore { display: block; }
-        body.ahk-maximized .ahk-title-btn-maximize { display: none; }
-        .ahk-title-btn:hover { background: rgba(255,255,255,0.03); transform: translateY(-1px); }
-        .ahk-title-btn-close:hover { background: #dc3545; color: #fff; }
-        .ahk-title-btn-close { color: #ffcece; }
-        .ahk-title-btn[title] { font-weight: 600; }
-        .ahk-title-btn-close[title] { font-weight: 700; }
+        body .ahk-title-btn-restore {
+            display: none;
+        }
+
+        body.ahk-maximized .ahk-title-btn-restore {
+            display: block;
+        }
+
+        body.ahk-maximized .ahk-title-btn-maximize {
+            display: none;
+        }
+
+        .ahk-title-btn:hover {
+            background: rgba(255, 255, 255, 0.03);
+            transform: translateY(-1px);
+        }
+
+        .ahk-title-btn-close:hover {
+            background: #dc3545;
+            color: #fff;
+        }
+
+        .ahk-title-btn-close {
+            color: #ffcece;
+        }
+
+        .ahk-title-btn[title] {
+            font-weight: 600;
+        }
+
+        .ahk-title-btn-close[title] {
+            font-weight: 700;
+        }
 
         .b-example-divider {
             display: none;
@@ -158,6 +212,15 @@
             flex-grow: 1;
             position: relative;
             z-index: 10;
+        }
+
+        .main-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .main-content {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
         }
 
         .main-content h1 {
@@ -204,14 +267,14 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: 0 8px 18px rgba(0,0,0,0.45);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
             transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
             font-weight: 600;
         }
 
         .main-content button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 28px rgba(0,0,0,0.5);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
             filter: brightness(0.98);
         }
 
@@ -236,38 +299,41 @@
 
         .input {
             border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.06);
-            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.02);
             color: var(--muted);
             padding: 10px 12px;
             transition: background 0.15s, box-shadow 0.12s;
             cursor: pointer;
-            box-shadow: inset 0 -1px 0 rgba(0,0,0,0.18);
+            box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.18);
         }
 
         .input:focus {
             outline: none;
-            background: rgba(255,255,255,0.03);
-            box-shadow: 0 6px 18px rgba(0,0,0,0.55);
+            background: rgba(255, 255, 255, 0.03);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
         }
 
         select.input {
             color: var(--muted);
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
             -webkit-appearance: menulist;
             appearance: menulist;
         }
+
         select.input option {
             background: var(--bg-primary);
             color: var(--muted);
         }
-        select.input:focus, select.input:active {
-            background: rgba(255,255,255,0.04);
+
+        select.input:focus,
+        select.input:active {
+            background: rgba(255, 255, 255, 0.04);
         }
 
         .separator {
             height: 1px;
-            background: rgba(255,255,255,0.06);
+            background: rgba(255, 255, 255, 0.06);
             width: 100%;
             max-width: var(--max-width);
             margin: 15px 0;
@@ -279,11 +345,11 @@
             margin-top: 12px;
             padding: 12px;
             border-radius: 12px;
-            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.35));
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.35));
             border-left: 4px solid var(--accent-cyan);
             color: var(--muted);
             text-align: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
         }
 
         .license-status {
@@ -395,14 +461,27 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         @keyframes slideIn {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
+
         .toast {
             position: fixed;
             top: 20px;
@@ -423,8 +502,90 @@
         .toast.show {
             opacity: 1;
         }
+
+        #sideTab {
+            position: fixed;
+            top: 25%;
+            right: 0;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 60px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.438), rgba(0, 0, 0, 0.3));
+            border-radius: 10px 0 0 10px;
+            cursor: pointer;
+            z-index: 15;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: -4px 0 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, background 0.2s;
+        }
+
+        #sideTab:hover {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.4));
+        }
+
+        #sideTab::before {
+            content: "⚙️";
+            font-size: 16px;
+            color: var(--muted);
+        }
+
+        #sidePanel {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 250px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            border-left: 2px solid var(--accent-cyan);
+            box-shadow: -10px 0 20px rgba(0, 0, 0, 0.7);
+            z-index: 14;
+            padding: 20px;
+            overflow-y: auto;
+            transition: right 0.3s ease;
+        }
+
+        #sidePanel.open {
+            right: 30px;
+        }
+
+        #sidePanel h3 {
+            color: var(--accent-cyan);
+            margin-bottom: 15px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        #sidePanel .input-group {
+            margin-bottom: 15px;
+        }
+
+        #sidePanel .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: var(--muted);
+            font-size: 20px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        #sidePanel .close-btn:hover {
+            color: var(--accent-cyan);
+        }
+
+        #keybindsSection .input {
+            width: 220px;
+            max-width: 220px;
+            display: block;
+            margin: 0 auto;
+        }
     </style>
 </head>
+
 <body>
     <div class="ahk-titleBar">
         <span class="px-2 py-1" id="ahkTitleBar">FISHING MACRO</span>
@@ -436,7 +597,7 @@
     <div class="main-content">
         <div class="container"></div>
 
-        <p>FISHING MACRO V2.4</p>
+        <p>FISHING MACRO V2.5</p>
 
         <div class="button-row">
             <button class="input" id="startMacro">Start Macro</button>
@@ -471,27 +632,9 @@
         </div>
 
         <div class="input-group" style="margin-bottom: 5px;">
-            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
-                <input type="checkbox" id="toggleSecondary" style="margin-right: 5px;">
-                <label for="toggleSecondary" style="font-size: 14px; color: #ffffff; margin: 0;">Use Lure</label>
-            </div>
-            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px; gap:8px;">
-            </div>
-            <label id="keyLabel" for="keySelect" style="font-size: 16px; margin-bottom: 3px;">Fishing Rod Key (0-9):</label>
+            <label for="keySelect" style="font-size: 16px; margin-bottom: 3px;">Fishing Rod Key (0-9):</label>
             <div style="display: flex; justify-content: center; align-items: center;">
                 <select id="keySelect" class="input" style="padding: 10px 0.5rem; font-size: 15px; width: 80px;">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                </select>
-                <select id="secondaryKeySelect" class="input" style="padding: 10px 0.5rem; font-size: 15px; width: 80px; display: none; margin-left: 10px;">
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -508,7 +651,9 @@
 
         <div class="input-group">
             <label for="fishTriggerConfidence">Fish Trigger Confidence (0-100):</label>
-            <input type="number" id="fishTriggerConfidence" class="input" style="padding: 10px 0.5rem; font-size: 15px; width: 80px; display: block; margin: 0 auto;" min="0" max="100" value="60">
+            <input type="number" id="fishTriggerConfidence" class="input"
+                style="padding: 10px 0.5rem; font-size: 15px; width: 80px; display: block; margin: 0 auto;" min="0"
+                max="100" value="60">
         </div>
 
         <div class="button-row button-row-center">
@@ -537,14 +682,17 @@
                 <input type="text" id="exitKey" class="input" placeholder="e.g., F4 or Ctrl+Q">
             </div>
 
-            <div class="input-group" style="text-align: left; background: rgba(255,255,255,0.02); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+            <div class="input-group"
+                style="text-align: center; background: rgba(255,255,255,0.02); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); margin: 0 auto; max-width: 360px;">
                 <h3 style="color: #ffffff; font-size: 16px; margin-bottom: 8px;">How to Set Up Keybinds</h3>
                 <p style="color: #ffffff; font-size: 14px; margin-bottom: 8px;">
-                    Enter key combinations in the text fields below. Use the format: <strong>Modifier + Key</strong> (e.g., "Shift+A"). Modifiers are optional for single keys.
+                    Enter key combinations in the text fields below. Use the format: <strong>Modifier + Key</strong>
+                    (e.g., "Shift+A"). Modifiers are optional for single keys.
                 </p>
-                <ul style="color: #ffffff; font-size: 13px; padding-left: 20px; margin-bottom: 8px;">
+                <ul style="color: #ffffff; font-size: 13px; padding-left: 20px; margin-bottom: 8px; text-align: left;">
                     <li><strong>Supported Modifiers</strong> (case-insensitive): Shift, Ctrl/Control, Alt, Win.</li>
-                    <li><strong>Keys</strong>: Letters (A-Z), numbers (0-9), F-keys (F1-F12), or special keys like Space, Tab, Enter.</li>
+                    <li><strong>Keys</strong>: Letters (A-Z), numbers (0-9), F-keys (F1-F12), or special keys like
+                        Space, Tab, Enter.</li>
                     <li><strong>Examples</strong>:
                         <ul style="padding-left: 20px;">
                             <li>"F1" → Press F1 alone.</li>
@@ -557,13 +705,13 @@
                 </ul>
                 <p style="color: #ffffff; font-size: 13px; margin-bottom: 8px;">
                     <strong>Tips</strong>:
-                    <ul style="padding-left: 20px;">
-                        <li>Changes save automatically and take effect immediately.</li>
-                        <li>If a keybind doesn't work, check the Debug.log file for errors (e.g., invalid key).</li>
-                        <li>Avoid conflicting keys (e.g., don't use F1 if it's already bound elsewhere).</li>
-                        <li>Single keys like "A" work, but modifiers make them unique.</li>
-                    </ul>
                 </p>
+                <ul style="color: #ffffff; font-size: 13px; padding-left: 20px; margin-bottom: 8px; text-align: left;">
+                    <li>Changes save automatically and take effect immediately.</li>
+                    <li>If a keybind doesn't work, check the Debug.log file for errors (e.g., invalid key).</li>
+                    <li>Avoid conflicting keys (e.g., don't use F1 if it's already bound elsewhere).</li>
+                    <li>Single keys like "A" work, but modifiers make them unique.</li>
+                </ul>
                 <p style="color: #ff6b6b; font-size: 12px; margin: 0;">
                     Note: Multi-key sequences (e.g., "A then B") are not supported. Only modifier + single key combos.
                 </p>
@@ -577,14 +725,19 @@
         </div>
 
         <h1>Created By Vunoxoulia</h1>
-        <p style="text-align:center; margin-top:6px;"><a id="setupGuideLink" href="https://youtu.be/ds3XSLw2fcc" target="_blank" style="color: #00bfff; text-decoration: underline;">Set up guide</a> | <a id="discordLink" href="https://discord.gg/m6hbdF5H" target="_blank" style="color: #5865F2; text-decoration: none; font-size: 18px;" title="Join our Discord">🔗 Discord</a></p>
+        <p style="text-align:center; margin-top:6px;"><a id="setupGuideLink" href="https://youtu.be/ds3XSLw2fcc"
+                target="_blank" style="color: #00bfff; text-decoration: underline;">Set up guide</a> | <a
+                id="discordLink" href="https://discord.gg/m6hbdF5H" target="_blank"
+                style="color: #5865F2; text-decoration: none; font-size: 18px;" title="Join our Discord">🔗 Discord</a>
+        </p>
 
         <div id="trialModal" class="modal">
             <div class="modal-content">
                 <h2>Trial Expired</h2>
-                <p>Your 12-hour trial has expired. Click the link below to download to reset your trial.</p>
-                <p><a href="https://github.com/Vunoxoulia/AOFishingMacro/tree/main" target="_blank" style="color: #FEBF00; text-decoration: underline;">Download Latest Version</a></p>
-                <p>After downloading and replacing the file, restart the macro to get a fresh 12-hour trial.</p>
+                <p>Your 4-hour trial has expired. Click the link below to download to reset your trial.</p>
+                <p><a href="https://github.com/Vunoxoulia/AOFishingMacro/tree/main" target="_blank"
+                        style="color: #FEBF00; text-decoration: underline;">Download Latest Version</a></p>
+                <p>After downloading and replace the file (exe and Pages folder). to get back your 4 hours</p>
                 <button class="cancel-btn" onclick="closeModal()">Close</button>
             </div>
         </div>
@@ -599,9 +752,12 @@
                 </div>
                 <div id="goPremiumStep2" style="display: none;">
                     <p>Your premium serial and HWID (copy and send to developer):</p>
-                    <p id="goPremiumInfo" style="font-weight: bold; font-size: 14px; background: #333; padding: 10px; border-radius: 5px;">Loading...</p>
+                    <p id="goPremiumInfo"
+                        style="font-weight: bold; font-size: 14px; background: #333; padding: 10px; border-radius: 5px;">
+                        Loading...</p>
                     <p>Enter the One-Time Password from the developer:</p>
-                    <input type="text" id="goPremiumOTP" placeholder="Enter OTP" style="max-width: 250px; display: block; margin: 10px auto;">
+                    <input type="text" id="goPremiumOTP" placeholder="Enter OTP"
+                        style="max-width: 250px; display: block; margin: 10px auto;">
                     <p id="goPremiumError" style="color: #ff6b6b; display: none;">Invalid OTP. Try again.</p>
                     <button class="unlock-btn" onclick="activateGoPremium()">Activate</button>
                     <button class="cancel-btn" onclick="closeGoPremiumModal()">Cancel</button>
@@ -614,8 +770,10 @@
                 <h2>📊 FISHING STATISTICS</h2>
                 <div id="statisticsContent">
                     <div id="premiumStatsView" style="display: none;">
-                        <h3 style="color: var(--accent-cyan); margin-top: 20px; margin-bottom: 10px;">Current Session</h3>
-                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <h3 style="color: var(--accent-cyan); margin-top: 20px; margin-bottom: 10px;">Current Session
+                        </h3>
+                        <div
+                            style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
                             <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
                                 <span>🐟 Fish</span>
                                 <span id="sessionFish" style="color: var(--accent-cyan); font-weight: bold;">0</span>
@@ -630,16 +788,20 @@
                             </div>
                             <div style="display: flex; justify-content: space-between;">
                                 <span>💎 Treasure</span>
-                                <span id="sessionTreasure" style="color: var(--accent-cyan); font-weight: bold;">0</span>
+                                <span id="sessionTreasure"
+                                    style="color: var(--accent-cyan); font-weight: bold;">0</span>
                             </div>
-                            <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 10px; padding-top: 10px; display: flex; justify-content: space-between;">
+                            <div
+                                style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 10px; padding-top: 10px; display: flex; justify-content: space-between;">
                                 <span style="font-weight: bold;">Total Caught</span>
                                 <span id="sessionTotal" style="color: var(--accent-purple); font-weight: bold;">0</span>
                             </div>
                         </div>
 
-                        <h3 style="color: var(--accent-cyan); margin-top: 20px; margin-bottom: 10px;">Overall Total (All Sessions)</h3>
-                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <h3 style="color: var(--accent-cyan); margin-top: 20px; margin-bottom: 10px;">Overall Total (All
+                            Sessions)</h3>
+                        <div
+                            style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
                             <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
                                 <span>🐟 Fish</span>
                                 <span id="totalFish" style="color: var(--accent-cyan); font-weight: bold;">0</span>
@@ -656,7 +818,8 @@
                                 <span>💎 Treasure</span>
                                 <span id="totalTreasure" style="color: var(--accent-cyan); font-weight: bold;">0</span>
                             </div>
-                            <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 10px; padding-top: 10px; display: flex; justify-content: space-between;">
+                            <div
+                                style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 10px; padding-top: 10px; display: flex; justify-content: space-between;">
                                 <span style="font-weight: bold;">Grand Total</span>
                                 <span id="grandTotal" style="color: var(--accent-purple); font-weight: bold;">0</span>
                             </div>
@@ -664,8 +827,10 @@
                     </div>
 
                     <div id="goPremiumStatsView" style="text-align: center;">
-                        <p style="font-size: 16px; margin: 3px 0;">Track your fishing progress with detailed statistics!</p>
-                        <div style="background: linear-gradient(135deg, #FEBF00, #FFA500); color: #001217; padding: 15px; border-radius: 8px; margin: 20px 0; font-weight: bold;">
+                        <p style="font-size: 16px; margin: 3px 0;">Track your fishing progress with detailed statistics!
+                        </p>
+                        <div
+                            style="background: linear-gradient(135deg, #FEBF00, #FFA500); color: #001217; padding: 15px; border-radius: 8px; margin: 20px 0; font-weight: bold;">
                             ✨ Premium Feature ✨
                         </div>
                         <p>Statistics logging is exclusive to premium users. Unlock premium to:</p>
@@ -674,8 +839,10 @@
                             <li>✓ View current session statistics</li>
                             <li>✓ Monitor overall lifetime totals</li>
                             <li>✓ No More Timer</li>
+                            <li>✓ Auto Fleet Repair</li>
                         </ul>
-                        <button class="unlock-btn" onclick="premiumAction()" style="width: 100%; margin-bottom: 10px;">🔓 GO PREMIUM NOW</button>
+                        <button class="unlock-btn" onclick="premiumAction()"
+                            style="width: 100%; margin-bottom: 10px;">🔓 GO PREMIUM NOW</button>
                     </div>
                 </div>
 
@@ -684,524 +851,691 @@
                 </div>
             </div>
         </div>
+    </div>
 
-    <script>
-        let trialTimerInterval = 0;
-        let remainingSeconds = 0;
-        let removalConfirmed = false;
-
-        function callAHK(funcName, ...args) {
-            try {
-                const macroFuncs = window.chrome.webview.hostObjects.MacroFuncs;
-                if (macroFuncs && macroFuncs[funcName]) {
-                    macroFuncs[funcName](...args);
-                } else {
-                    console.error(`AHK function '${funcName}' not found.`);
-                }
-            } catch (e) {
-                console.error('Error calling AHK function:', e);
-            }
-        }
-
-        async function initializeUI() {
-            console.log('Initializing UI...');
-            try {
-                if (!window.chrome || !window.chrome.webview || !window.chrome.webview.hostObjects || !window.chrome.webview.hostObjects.MacroFuncs) {
-                    console.error('Host objects not ready. Retrying in 1 second...');
-                    setTimeout(initializeUI, 1000);
-                    return;
-                }
-
-                await window.chrome.webview.hostObjects.MacroFuncs.loadAllSettings();
-                const triggerConfidence = await window.chrome.webview.hostObjects.MacroFuncs.getFishTriggerConfidence();
-                document.getElementById('fishTriggerConfidence').value = triggerConfidence;
-                const method = await window.chrome.webview.hostObjects.MacroFuncs.getCurrentMethod();
-                document.getElementById('methodSelect').value = method.toLowerCase();
-                const key = await window.chrome.webview.hostObjects.MacroFuncs.getCurrentKey();
-                document.getElementById('keySelect').value = key;
-                const secondaryKey = await window.chrome.webview.hostObjects.MacroFuncs.getCurrentSecondaryKey();
-                document.getElementById('secondaryKeySelect').value = secondaryKey;
-                const toggleSecondary = await window.chrome.webview.hostObjects.MacroFuncs.getToggleSecondary();
-                document.getElementById('toggleSecondary').checked = toggleSecondary;
-                document.getElementById('secondaryKeySelect').style.display = toggleSecondary ? 'block' : 'none';
-                const label = document.getElementById('keyLabel');
-                label.textContent = toggleSecondary ? 'Fishing Rod Key (0-9): | Lure Key (0-9)' : 'Fishing Rod Key (0-9):';
-                const cameraAdjustKey = await window.chrome.webview.hostObjects.MacroFuncs.getCameraAdjustKey();
-                document.getElementById('cameraAdjustKey').value = cameraAdjustKey;
-                const startMacroKey = await window.chrome.webview.hostObjects.MacroFuncs.getStartMacroKey();
-                document.getElementById('startMacroKey').value = startMacroKey;
-                const reloadMacroKey = await window.chrome.webview.hostObjects.MacroFuncs.getReloadMacroKey();
-                document.getElementById('reloadMacroKey').value = reloadMacroKey;
-                const screenshotKey = await window.chrome.webview.hostObjects.MacroFuncs.getScreenshotKey();
-                document.getElementById('screenshotKey').value = screenshotKey;
-                const exitKey = await window.chrome.webview.hostObjects.MacroFuncs.getExitKey();
-                document.getElementById('exitKey').value = exitKey;
-
-                await startTrialTimer();
-                console.log('UI initialized successfully');
-            } catch (e) {
-                console.error('Error initializing UI:', e);
-                setTimeout(initializeUI, 50);
-            }
-        }
-
-        async function startTrialTimer() {
-            console.log('Fetching initial remaining time and license status from AHK...');
-            try {
-                const initialRemaining = await window.chrome.webview.hostObjects.MacroFuncs.getAOVunoxTrialRemainingTime();
-                console.log('Initial remaining time from AHK:', initialRemaining);
-                remainingSeconds = initialRemaining || 0;
-                let license = { status: "Unknown", remaining: 0 };
-                try {
-                    license = await window.chrome.webview.hostObjects.MacroFuncs.getLicenseStatus();
-                    console.log('License status from AHK:', license);
-                } catch (e) {
-                    console.error('Error fetching license status:', e);
-                }
-                if (trialTimerInterval) {
-                    clearInterval(trialTimerInterval);
-                }
-                updateTimerDisplay(license);
-                if (remainingSeconds > 0 && license.status !== "Premium") {
-                    console.log('Starting countdown timer with', remainingSeconds, 'seconds');
-                    trialTimerInterval = setInterval(() => {
-                        remainingSeconds--;
-                        updateTimerDisplay(license);
-                        if (remainingSeconds <= 0) {
-                            clearInterval(trialTimerInterval);
-                            trialTimerInterval = null;
-                            updateTimerDisplay(license);
-                        }
-                    }, 1000);
-                } else {
-                    console.log('No time remaining or premium, not starting timer');
-                }
-            } catch (e) {
-                console.error('Error starting trial timer:', e);
-                remainingSeconds = 0;
-                updateTimerDisplay({ status: "Expired", remaining: 0 });
-            }
-        }
-
-        function updateTimerDisplay(license) {
-            console.log('Updating timer display with remainingSeconds:', remainingSeconds, 'and license:', license);
-            const statusEl = document.getElementById("licenseStatus");
-            const timeEl = document.getElementById("licenseTime");
-            const btn = document.getElementById("premiumBtn");
+    <div id="sideTab" title="Settings" onclick="toggleSidePanel()"></div>
+    <div id="sidePanel">
+        <button class="close-btn" onclick="closeSidePanel()">×</button>
+        <h3>Settings</h3>
+        <div class="input-group" style="margin-bottom: 5px;">
+            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                <input type="checkbox" id="toggleSecondary" style="margin-right: 5px;">
+                <label for="toggleSecondary" style="font-size: 14px; color: #ffffff; margin: 0;">Use Lure</label>
+            </div>
+            <div style="display: flex; justify-content: center; align-items: center; gap:8px;">
+                <select id="secondaryKeySelect" class="input"
+                    style="padding: 10px 0.5rem; font-size: 15px; width: 80px; display: none;">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                </select>
+            </div>
             
-            window.chrome.webview.hostObjects.MacroFuncs.getIsPremium().then(isPremium => {
-                if (isPremium || (license && license.status === "Premium")) {
-                    statusEl.textContent = "Status: Premium";
-                    timeEl.textContent = "Time remaining: Unlimited";
-                    btn.textContent = "Remove Premium";
-                    closeModal();
-                } else if (remainingSeconds > 0) {
-                    statusEl.textContent = "Status: Free Trial";
-                    const min = Math.floor(remainingSeconds / 60);
-                    const sec = remainingSeconds % 60;
-                    timeEl.textContent = "Time remaining: " + String(min).padStart(2, "0") + ":" + String(sec).padStart(2, "0");
-                    btn.textContent = "Go Premium";
-                    closeModal();
-                } else {
-                    statusEl.textContent = "Status: Trial Expired";
-                    timeEl.textContent = "Time remaining: 00:00";
-                    btn.textContent = "Go Premium";
+        <div id="autoLureDetails" style="display: none;">
+                <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+                    <label for="autoLureInterval" style="font-size: 14px; color: #ffffff;">Every X Loops:</label>
+                    <input type="number" id="autoLureInterval" class="input"
+                        style="padding: 10px 0.5rem; font-size: 15px; width: 80px;" min="1" value="5">
+                </div>
+            </div>
+        </div>
+
+        <div class="input-group" style="margin-bottom: 5px;">
+            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                <input type="checkbox" id="toggleDarkSeaI1" style="margin-right: 5px;">
+                <label for="toggleDarkSeaI1" style="font-size: 14px; color: #ffffff; margin: 0;">Dark Sea I1</label>
+            </div>
+            <div id="darkSeaI1Details" style="display: none;">
+                <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+                    <label for="darkSeaI1Key" style="font-size: 14px; color: #ffffff;">Soap Key:</label>
+                    <select id="darkSeaI1Key" class="input" style="padding: 10px 0.5rem; font-size: 15px; width: 80px;">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div id="autoFleetRepairGroup" class="input-group" style="display: none; margin-bottom: 5px;">
+            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                <input type="checkbox" id="toggleAutoFleetRepair" style="margin-right: 5px;">
+                <label for="toggleAutoFleetRepair" style="font-size: 14px; color: #ffffff; margin: 0;">Use Auto Fleet
+                    Repair</label>
+            </div>
+            <div id="autoFleetRepairDetails" style="display: none;">
+                <div
+                    style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 5px;">
+                    <label for="autoFleetRepairKey" style="font-size: 14px; color: #ffffff;">Repair Key:</label>
+                    <input type="text" id="autoFleetRepairKey" class="input"
+                        style="padding: 10px 0.5rem; font-size: 15px; width: 80px;" placeholder="e.g., R">
+                </div>
+                <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+                    <label for="autoFleetRepairInterval" style="font-size: 14px; color: #ffffff;">Every X Loops:</label>
+                    <input type="number" id="autoFleetRepairInterval" class="input"
+                        style="padding: 10px 0.5rem; font-size: 15px; width: 80px;" min="1" value="5">
+                </div>
+            </div>
+        </div>
+    </div>
+        <script>
+            let trialTimerInterval = 0;
+            let remainingSeconds = 0;
+            let removalConfirmed = false;
+
+            function callAHK(funcName, ...args) {
+                try {
+                    const macroFuncs = window.chrome.webview.hostObjects.MacroFuncs;
+                    if (macroFuncs && macroFuncs[funcName]) {
+                        macroFuncs[funcName](...args);
+                    } else {
+                        console.error(`AHK function '${funcName}' not found.`);
+                    }
+                } catch (e) {
+                    console.error('Error calling AHK function:', e);
                 }
-            }).catch(err => {
-                console.error('Error getting premium status:', err);
-                if (license && license.status === "Premium") {
-                    statusEl.textContent = "Status: Premium";
-                    timeEl.textContent = "Time remaining: Unlimited";
-                    btn.textContent = "Remove Premium";
+            }
+
+            async function initializeUI() {
+                console.log('Initializing UI...');
+                try {
+                    if (!window.chrome || !window.chrome.webview || !window.chrome.webview.hostObjects || !window.chrome.webview.hostObjects.MacroFuncs) {
+                        console.error('Host objects not ready. Retrying in 1 second...');
+                        setTimeout(initializeUI, 1000);
+                        return;
+                    }
+
+                    await window.chrome.webview.hostObjects.MacroFuncs.loadAllSettings();
+
+                    const autoFleetRepairEnabled = await window.chrome.webview.hostObjects.MacroFuncs.getAutoFleetRepairEnabled();
+                    console.log('Loaded autoFleetRepairEnabled:', autoFleetRepairEnabled);
+                    document.getElementById('toggleAutoFleetRepair').checked = autoFleetRepairEnabled;
+                    const autoFleetRepairKey = await window.chrome.webview.hostObjects.MacroFuncs.getAutoFleetRepairKey();
+                    console.log('Loaded autoFleetRepairKey:', autoFleetRepairKey);
+                    document.getElementById('autoFleetRepairKey').value = autoFleetRepairKey;
+                    const autoFleetRepairInterval = await window.chrome.webview.hostObjects.MacroFuncs.getAutoFleetRepairInterval();
+                    console.log('Loaded autoFleetRepairInterval:', autoFleetRepairInterval);
+                    document.getElementById('autoFleetRepairInterval').value = autoFleetRepairInterval;
+                    console.log('Setting autoFleetRepairInterval to:', autoFleetRepairInterval);
+                    const details = document.getElementById('autoFleetRepairDetails');
+                    details.style.display = autoFleetRepairEnabled ? 'block' : 'none';
+                    const isPremium = await window.chrome.webview.hostObjects.MacroFuncs.getIsPremium();
+                    document.getElementById('autoFleetRepairGroup').style.display = isPremium ? 'block' : 'none';
+                    const toggleDarkSeaI1 = await window.chrome.webview.hostObjects.MacroFuncs.getToggleDarkSeaI1();
+                    document.getElementById('toggleDarkSeaI1').checked = toggleDarkSeaI1;
+                    const darkSeaI1Key = await window.chrome.webview.hostObjects.MacroFuncs.getDarkSeaI1Key();
+                    document.getElementById('darkSeaI1Key').value = darkSeaI1Key;
+                    const darkSeaI1Details = document.getElementById('darkSeaI1Details');
+                    darkSeaI1Details.style.display = toggleDarkSeaI1 ? 'block' : 'none';
+
+                    const triggerConfidence = await window.chrome.webview.hostObjects.MacroFuncs.getFishTriggerConfidence();
+                    document.getElementById('fishTriggerConfidence').value = triggerConfidence;
+                    const method = await window.chrome.webview.hostObjects.MacroFuncs.getCurrentMethod();
+                    document.getElementById('methodSelect').value = method.toLowerCase();
+                    const key = await window.chrome.webview.hostObjects.MacroFuncs.getCurrentKey();
+                    document.getElementById('keySelect').value = key;
+                    const secondaryKey = await window.chrome.webview.hostObjects.MacroFuncs.getCurrentSecondaryKey();
+                    document.getElementById('secondaryKeySelect').value = secondaryKey;
+                    const toggleSecondary = await window.chrome.webview.hostObjects.MacroFuncs.getToggleSecondary();
+                    document.getElementById('toggleSecondary').checked = toggleSecondary;
+
+                    const cameraAdjustKey = await window.chrome.webview.hostObjects.MacroFuncs.getCameraAdjustKey();
+                    document.getElementById('cameraAdjustKey').value = cameraAdjustKey;
+                    const startMacroKey = await window.chrome.webview.hostObjects.MacroFuncs.getStartMacroKey();
+                    document.getElementById('startMacroKey').value = startMacroKey;
+                    const reloadMacroKey = await window.chrome.webview.hostObjects.MacroFuncs.getReloadMacroKey();
+                    document.getElementById('reloadMacroKey').value = reloadMacroKey;
+                    const screenshotKey = await window.chrome.webview.hostObjects.MacroFuncs.getScreenshotKey();
+                    document.getElementById('screenshotKey').value = screenshotKey;
+                    const exitKey = await window.chrome.webview.hostObjects.MacroFuncs.getExitKey();
+                    document.getElementById('exitKey').value = exitKey;
+                    const autoLureInterval = await window.chrome.webview.hostObjects.MacroFuncs.getAutoLureInterval();
+                    document.getElementById('autoLureInterval').value = autoLureInterval;
+                    const lureDetails = document.getElementById('autoLureDetails');
+                    lureDetails.style.display = toggleSecondary ? 'block' : 'none';
+                    const secondarySelect = document.getElementById('secondaryKeySelect');
+                    secondarySelect.style.display = toggleSecondary ? 'block' : 'none';
+
+                    await startTrialTimer();
+                    console.log('UI initialized successfully');
+                } catch (e) {
+                    console.error('Error initializing UI:', e);
+                    setTimeout(initializeUI, 50);
+                }
+            }
+
+            async function startTrialTimer() {
+                console.log('Fetching initial remaining time and license status from AHK...');
+                try {
+                    const initialRemaining = await window.chrome.webview.hostObjects.MacroFuncs.getAOVunoxTrialRemainingTime();
+                    console.log('Initial remaining time from AHK:', initialRemaining);
+                    remainingSeconds = initialRemaining || 0;
+                    let license = { status: "Unknown", remaining: 0 };
+                    try {
+                        license = await window.chrome.webview.hostObjects.MacroFuncs.getLicenseStatus();
+                        console.log('License status from AHK:', license);
+                    } catch (e) {
+                        console.error('Error fetching license status:', e);
+                    }
+                    if (trialTimerInterval) {
+                        clearInterval(trialTimerInterval);
+                    }
+                    updateTimerDisplay(license);
+                    if (remainingSeconds > 0 && license.status !== "Premium") {
+                        console.log('Starting countdown timer with', remainingSeconds, 'seconds');
+                        trialTimerInterval = setInterval(() => {
+                            remainingSeconds--;
+                            updateTimerDisplay(license);
+                            if (remainingSeconds <= 0) {
+                                clearInterval(trialTimerInterval);
+                                trialTimerInterval = null;
+                                updateTimerDisplay(license);
+                            }
+                        }, 1000);
+                    } else {
+                        console.log('No time remaining or premium, not starting timer');
+                    }
+                } catch (e) {
+                    console.error('Error starting trial timer:', e);
+                    remainingSeconds = 0;
+                    updateTimerDisplay({ status: "Expired", remaining: 0 });
+                }
+            }
+
+            function updateTimerDisplay(license) {
+                console.log('Updating timer display with remainingSeconds:', remainingSeconds, 'and license:', license);
+                const statusEl = document.getElementById("licenseStatus");
+                const timeEl = document.getElementById("licenseTime");
+                const btn = document.getElementById("premiumBtn");
+
+                window.chrome.webview.hostObjects.MacroFuncs.getIsPremium().then(isPremium => {
+                    if (isPremium || (license && license.status === "Premium")) {
+                        statusEl.textContent = "Status: Premium";
+                        timeEl.textContent = "Time remaining: Unlimited";
+                        btn.textContent = "Remove Premium";
+                        closeModal();
+                    } else if (remainingSeconds > 0) {
+                        statusEl.textContent = "Status: Free Trial";
+                        const min = Math.floor(remainingSeconds / 60);
+                        const sec = remainingSeconds % 60;
+                        timeEl.textContent = "Time remaining: " + String(min).padStart(2, "0") + ":" + String(sec).padStart(2, "0");
+                        btn.textContent = "Go Premium";
+                        closeModal();
+                    } else {
+                        statusEl.textContent = "Status: Trial Expired";
+                        timeEl.textContent = "Time remaining: 00:00";
+                        btn.textContent = "Go Premium";
+                    }
+                }).catch(err => {
+                    console.error('Error getting premium status:', err);
+                    if (license && license.status === "Premium") {
+                        statusEl.textContent = "Status: Premium";
+                        timeEl.textContent = "Time remaining: Unlimited";
+                        btn.textContent = "Remove Premium";
+                    } else {
+                        statusEl.textContent = "Status: Trial Expired";
+                        timeEl.textContent = "Time remaining: 00:00";
+                        btn.textContent = "Go Premium";
+                    }
+                });
+            }
+
+            async function showModal() {
+                console.log('Showing trial modal...');
+                try {
+                    const modal = document.getElementById('trialModal');
+                    modal.style.display = 'block';
+                    modal.style.pointerEvents = 'auto';
+                    const content = modal.querySelector('.modal-content');
+                    if (content) {
+                        content.style.pointerEvents = 'auto';
+                    }
+                } catch (e) {
+                    console.error('Error showing modal:', e);
+                }
+            }
+
+            document.getElementById('startMacro').addEventListener('click', async (e) => {
+                console.log('Start Macro clicked - DEBUG');
+                try {
+                    const statusText = document.getElementById('licenseStatus').textContent;
+                    const isPremium = await window.chrome.webview.hostObjects.MacroFuncs.getIsPremium().catch(() => false);
+
+                    if (!isPremium && (statusText.includes('Trial Expired') || statusText.includes('Expired'))) {
+                        console.log('Trial expired (checking license status display)');
+                        showModal();
+                    } else {
+                        console.log('Starting macro (not expired or premium)');
+                        callAHK('start');
+                    }
+                } catch (error) {
+                    console.error('Error in start macro:', error);
+                    showToast('Error starting macro. Check console.');
+                }
+                e.target.blur();
+            });
+
+            document.getElementById('reloadMacro').addEventListener('click', (e) => {
+                callAHK('reload');
+                e.target.blur();
+            });
+
+            document.getElementById('viewStats').addEventListener('click', (e) => {
+                showStatisticsModal();
+                e.target.blur();
+            });
+
+            document.getElementById('fishTrigger').addEventListener('click', (e) => {
+                callAHK('saveFishTrigger');
+                e.target.blur();
+            });
+
+            document.getElementById('fishCaughtArea').addEventListener('click', (e) => {
+                callAHK('selectFishCaughtArea');
+                e.target.blur();
+            });
+
+            document.getElementById('fishTriggerArea').addEventListener('click', (e) => {
+                callAHK('selectFishTriggerArea');
+                e.target.blur();
+            });
+
+            document.getElementById('baitArea').addEventListener('click', (e) => {
+                callAHK('selectBaitArea');
+                e.target.blur();
+            });
+
+            document.getElementById('methodSelect').addEventListener('change', (e) => {
+                const method = e.target.value;
+                callAHK('updateMethod', method);
+            });
+
+            document.getElementById('keySelect').addEventListener('change', (e) => {
+                const key = e.target.value;
+                callAHK('updateKey', key);
+            });
+
+            document.getElementById('toggleSecondary').addEventListener('change', (e) => {
+                const secondarySelect = document.getElementById('secondaryKeySelect');
+                secondarySelect.style.display = e.target.checked ? 'block' : 'none';
+                const lureDetails = document.getElementById('autoLureDetails');
+                lureDetails.style.display = e.target.checked ? 'block' : 'none';
+                callAHK('updateToggleSecondary', e.target.checked);
+            });
+
+            document.getElementById('secondaryKeySelect').addEventListener('change', (e) => {
+                const key = e.target.value;
+                callAHK('updateSecondaryKey', key);
+            });
+
+            document.getElementById('fishTriggerConfidence').addEventListener('change', (e) => {
+                const confidence = parseInt(e.target.value, 10);
+                if (confidence >= 0 && confidence <= 100) {
+                    callAHK('updateFishTriggerConfidence', confidence);
                 } else {
-                    statusEl.textContent = "Status: Trial Expired";
-                    timeEl.textContent = "Time remaining: 00:00";
-                    btn.textContent = "Go Premium";
+                    showToast('Confidence must be between 0 and 100.');
+                    e.target.value = 60;
                 }
             });
-        }
 
-        async function showModal() {
-            console.log('Showing trial modal...');
-            try {
-                const modal = document.getElementById('trialModal');
+            document.getElementById('keybindsToggle').addEventListener('click', (e) => {
+                const section = document.getElementById('keybindsSection');
+                section.style.display = section.style.display === 'none' ? 'block' : 'none';
+                e.target.blur();
+            });
+
+            document.getElementById('cameraAdjustKey').addEventListener('change', (e) => {
+                const key = e.target.value.trim();
+                if (key) {
+                    callAHK('updateCameraAdjustKey', key);
+                }
+            });
+
+            document.getElementById('startMacroKey').addEventListener('change', (e) => {
+                const key = e.target.value.trim();
+                if (key) {
+                    callAHK('updateStartMacroKey', key);
+                }
+            });
+
+            document.getElementById('reloadMacroKey').addEventListener('change', (e) => {
+                const key = e.target.value.trim();
+                if (key) {
+                    callAHK('updateReloadMacroKey', key);
+                }
+            });
+
+            document.getElementById('screenshotKey').addEventListener('change', (e) => {
+                const key = e.target.value.trim();
+                if (key) {
+                    callAHK('updateScreenshotKey', key);
+                }
+            });
+
+            document.getElementById('exitKey').addEventListener('change', (e) => {
+                const key = e.target.value.trim();
+                if (key) {
+                    callAHK('updateExitKey', key);
+                }
+            });
+
+            document.getElementById('toggleAutoFleetRepair').addEventListener('change', (e) => {
+                callAHK('updateAutoFleetRepairEnabled', e.target.checked);
+            });
+
+            document.getElementById('autoFleetRepairKey').addEventListener('change', (e) => {
+                const key = e.target.value.trim();
+                if (key) {
+                    callAHK('updateAutoFleetRepairKey', key);
+                }
+            });
+
+            document.getElementById('autoFleetRepairInterval').addEventListener('change', (e) => {
+                const interval = parseInt(e.target.value, 10);
+                if (interval >= 1) {
+                    callAHK('updateAutoFleetRepairInterval', interval);
+                } else {
+                    showToast('Interval must be at least 1.');
+                    e.target.value = 5;
+                }
+            });
+
+            document.getElementById('toggleAutoFleetRepair').addEventListener('change', (e) => {
+                const details = document.getElementById('autoFleetRepairDetails');
+                details.style.display = e.target.checked ? 'block' : 'none';
+                callAHK('updateAutoFleetRepairEnabled', e.target.checked);
+            });
+
+            document.getElementById('autoLureInterval').addEventListener('change', (e) => {
+                const interval = parseInt(e.target.value, 10);
+                if (interval >= 1) {
+                    callAHK('updateAutoLureInterval', interval);
+                } else {
+                    showToast('Interval must be at least 1.');
+                    e.target.value = 5;
+                }
+            });
+
+            document.getElementById('toggleDarkSeaI1').addEventListener('change', (e) => {
+                const details = document.getElementById('darkSeaI1Details');
+                details.style.display = e.target.checked ? 'block' : 'none';
+                callAHK('updateToggleDarkSeaI1', e.target.checked);
+            });
+
+            document.getElementById('darkSeaI1Key').addEventListener('change', (e) => {
+                const key = e.target.value.trim();
+                if (key) {
+                    callAHK('updateDarkSeaI1Key', key);
+                }
+            });
+
+            async function refreshTimer() {
+                await startTrialTimer();
+            }
+
+            window.addEventListener('load', initializeUI);
+
+            async function premiumAction() {
+                const btn = document.getElementById("premiumBtn");
+                if (btn.textContent === "Remove Premium") {
+                    showRemovalConfirmation();
+                } else {
+                    showGoPremiumModal();
+                }
+            }
+
+            function showRemovalConfirmation() {
+                const modal = document.createElement('div');
+                modal.id = 'removalModal';
+                modal.className = 'modal';
+                modal.innerHTML = `
+            <div class="modal-content">
+                <h2>Remove Premium</h2>
+                <p>Are you sure you want to remove premium?</p>
+                <button class="unlock-btn" onclick="confirmRemoval()">Yes</button>
+                <button class="cancel-btn" onclick="closeModal('removalModal')">No</button>
+            </div>
+        `;
+                document.body.appendChild(modal);
                 modal.style.display = 'block';
-                modal.style.pointerEvents = 'auto';
-                const content = modal.querySelector('.modal-content');
-                if (content) {
-                    content.style.pointerEvents = 'auto';
-                }
-            } catch (e) {
-                console.error('Error showing modal:', e);
             }
-        }
 
-        document.getElementById('startMacro').addEventListener('click', async (e) => {
-            console.log('Start Macro clicked - DEBUG');
-            try {
-                const statusText = document.getElementById('licenseStatus').textContent;
-                const isPremium = await window.chrome.webview.hostObjects.MacroFuncs.getIsPremium().catch(() => false);
-                
-                if (!isPremium && (statusText.includes('Trial Expired') || statusText.includes('Expired'))) {
-                    console.log('Trial expired (checking license status display)');
-                    showModal();
-                } else {
-                    console.log('Starting macro (not expired or premium)');
-                    callAHK('start');
-                }
-            } catch (error) {
-                console.error('Error in start macro:', error);
-                showToast('Error starting macro. Check console.');
-            }
-            e.target.blur();
-        });
-
-        document.getElementById('reloadMacro').addEventListener('click', (e) => {
-            callAHK('reload');
-            e.target.blur();
-        });
-
-        document.getElementById('viewStats').addEventListener('click', (e) => {
-            showStatisticsModal();
-            e.target.blur();
-        });
-
-        document.getElementById('fishTrigger').addEventListener('click', (e) => {
-            callAHK('saveFishTrigger');
-            e.target.blur();
-        });
-
-        document.getElementById('fishCaughtArea').addEventListener('click', (e) => {
-            callAHK('selectFishCaughtArea');
-            e.target.blur();
-        });
-
-        document.getElementById('fishTriggerArea').addEventListener('click', (e) => {
-            callAHK('selectFishTriggerArea');
-            e.target.blur();
-        });
-
-        document.getElementById('baitArea').addEventListener('click', (e) => {
-            callAHK('selectBaitArea');
-            e.target.blur();
-        });
-
-        document.getElementById('methodSelect').addEventListener('change', (e) => {
-            const method = e.target.value;
-            callAHK('updateMethod', method);
-        });
-
-        document.getElementById('keySelect').addEventListener('change', (e) => {
-            const key = e.target.value;
-            callAHK('updateKey', key);
-        });
-
-        document.getElementById('toggleSecondary').addEventListener('change', (e) => {
-            const secondarySelect = document.getElementById('secondaryKeySelect');
-            secondarySelect.style.display = e.target.checked ? 'block' : 'none';
-            const label = document.getElementById('keyLabel');
-            label.textContent = e.target.checked ? 'Fishing Rod Key (0-9): | Lure Key (0-9)' : 'Fishing Rod Key (0-9):';
-            callAHK('updateToggleSecondary', e.target.checked);
-        });
-
-        document.getElementById('secondaryKeySelect').addEventListener('change', (e) => {
-            const key = e.target.value;
-            callAHK('updateSecondaryKey', key);
-        });
-
-        document.getElementById('fishTriggerConfidence').addEventListener('change', (e) => {
-            const confidence = parseInt(e.target.value, 10);
-            if (confidence >= 0 && confidence <= 100) {
-                callAHK('updateFishTriggerConfidence', confidence);
-            } else {
-                showToast('Confidence must be between 0 and 100.');
-                e.target.value = 60;
-            }
-        });
-
-        document.getElementById('keybindsToggle').addEventListener('click', (e) => {
-            const section = document.getElementById('keybindsSection');
-            section.style.display = section.style.display === 'none' ? 'block' : 'none';
-            e.target.blur();
-        });
-
-        document.getElementById('cameraAdjustKey').addEventListener('change', (e) => {
-            const key = e.target.value.trim();
-            if (key) {
-                callAHK('updateCameraAdjustKey', key);
-            }
-        });
-
-        document.getElementById('startMacroKey').addEventListener('change', (e) => {
-            const key = e.target.value.trim();
-            if (key) {
-                callAHK('updateStartMacroKey', key);
-            }
-        });
-
-        document.getElementById('reloadMacroKey').addEventListener('change', (e) => {
-            const key = e.target.value.trim();
-            if (key) {
-                callAHK('updateReloadMacroKey', key);
-            }
-        });
-
-        document.getElementById('screenshotKey').addEventListener('change', (e) => {
-            const key = e.target.value.trim();
-            if (key) {
-                callAHK('updateScreenshotKey', key);
-            }
-        });
-
-        document.getElementById('exitKey').addEventListener('change', (e) => {
-            const key = e.target.value.trim();
-            if (key) {
-                callAHK('updateExitKey', key);
-            }
-        });
-
-        async function refreshTimer() {
-            await startTrialTimer();
-        }
-
-        window.addEventListener('load', initializeUI);
-
-        async function premiumAction() {
-            const btn = document.getElementById("premiumBtn");
-            if (btn.textContent === "Remove Premium") {
-                showRemovalConfirmation();
-            } else {
-                showGoPremiumModal();
-            }
-        }
-
-        function showRemovalConfirmation() {
-            const modal = document.createElement('div');
-            modal.id = 'removalModal';
-            modal.className = 'modal';
-            modal.innerHTML = `
-                <div class="modal-content">
-                    <h2>Remove Premium</h2>
-                    <p>Are you sure you want to remove premium?</p>
-                    <button class="unlock-btn" onclick="confirmRemoval()">Yes</button>
-                    <button class="cancel-btn" onclick="closeModal('removalModal')">No</button>
-                </div>
-            `;
-            document.body.appendChild(modal);
-            modal.style.display = 'block';
-        }
-
-        async function confirmRemoval() {
-            closeModal('removalModal');
-            try {
-                const isValid = await window.chrome.webview.hostObjects.MacroFuncs.removePremium();
-                if (isValid) {
-                    showToast('Premium removed! Restarting...');
-                    window.chrome.webview.hostObjects.MacroFuncs.reload();
-                } else {
-                    showToast('Error removing premium.');
-                }
-            } catch (e) {
-                console.error('Error in confirmRemoval:', e);
-                showToast('Error removing premium. Check console for details.');
-            }
-        }
-
-        function closeModal(modalId = 'trialModal') {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.style.display = 'none';
-                modal.style.pointerEvents = 'none';
-                if (modalId === 'removalModal') {
-                    modal.remove();
+            async function confirmRemoval() {
+                closeModal('removalModal');
+                try {
+                    const isValid = await window.chrome.webview.hostObjects.MacroFuncs.removePremium();
+                    if (isValid) {
+                        showToast('Premium removed! Restarting...');
+                        window.chrome.webview.hostObjects.MacroFuncs.reload();
+                    } else {
+                        showToast('Error removing premium.');
+                    }
+                } catch (e) {
+                    console.error('Error in confirmRemoval:', e);
+                    showToast('Error removing premium. Check console for details.');
                 }
             }
-        }
 
-function showGoPremiumModal() {
-    closeStatisticsModal();
-    document.getElementById('goPremiumModal').style.display = 'block';
-    document.getElementById('goPremiumError').style.display = 'none';
-    loadGoPremiumInfo();
-}
-
-        async function loadGoPremiumInfo() {
-            try {
-                const serial = await window.chrome.webview.hostObjects.MacroFuncs.getAOVunoxPremiumSerial();
-                const hwid = await window.chrome.webview.hostObjects.MacroFuncs.getHWID();
-                document.getElementById('goPremiumInfo').textContent = `Serial: ${serial}\nHWID: ${hwid}`;
-            } catch (e) {
-                console.error('Error loading Go Premium info:', e);
-                document.getElementById('goPremiumInfo').textContent = 'Error loading info.';
+            function closeModal(modalId = 'trialModal') {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.style.display = 'none';
+                    modal.style.pointerEvents = 'none';
+                    if (modalId === 'removalModal') {
+                        modal.remove();
+                    }
+                }
             }
-        }
 
-        function nextGoPremiumStep() {
-            document.getElementById('goPremiumStep1').style.display = 'none';
-            document.getElementById('goPremiumStep2').style.display = 'block';
-        }
-
-        async function activateGoPremium() {
-            const otp = document.getElementById('goPremiumOTP').value.trim();
-            if (!otp) {
-                document.getElementById('goPremiumError').textContent = 'Please enter OTP.';
-                document.getElementById('goPremiumError').style.display = 'block';
-                return;
+            function showGoPremiumModal() {
+                closeStatisticsModal();
+                document.getElementById('goPremiumModal').style.display = 'block';
+                document.getElementById('goPremiumError').style.display = 'none';
+                loadGoPremiumInfo();
             }
-            try {
-                const isValid = await window.chrome.webview.hostObjects.MacroFuncs.validateOTP(otp);
-                if (isValid) {
-                    showToast('Premium activated! Restarting...');
-                    window.chrome.webview.hostObjects.MacroFuncs.reload();
-                } else {
-                    document.getElementById('goPremiumError').textContent = 'Invalid OTP. Try again.';
+
+            async function loadGoPremiumInfo() {
+                try {
+                    const serial = await window.chrome.webview.hostObjects.MacroFuncs.getAOVunoxPremiumSerial();
+                    const hwid = await window.chrome.webview.hostObjects.MacroFuncs.getHWID();
+                    document.getElementById('goPremiumInfo').textContent = `Serial: ${serial}\nHWID: ${hwid}`;
+                } catch (e) {
+                    console.error('Error loading Go Premium info:', e);
+                    document.getElementById('goPremiumInfo').textContent = 'Error loading info.';
+                }
+            }
+
+            function nextGoPremiumStep() {
+                document.getElementById('goPremiumStep1').style.display = 'none';
+                document.getElementById('goPremiumStep2').style.display = 'block';
+            }
+
+            async function activateGoPremium() {
+                const otp = document.getElementById('goPremiumOTP').value.trim();
+                if (!otp) {
+                    document.getElementById('goPremiumError').textContent = 'Please enter OTP.';
+                    document.getElementById('goPremiumError').style.display = 'block';
+                    return;
+                }
+                try {
+                    const isValid = await window.chrome.webview.hostObjects.MacroFuncs.validateOTP(otp);
+                    if (isValid) {
+                        showToast('Premium activated! Restarting...');
+                        window.chrome.webview.hostObjects.MacroFuncs.reload();
+                    } else {
+                        document.getElementById('goPremiumError').textContent = 'Invalid OTP. Try again.';
+                        document.getElementById('goPremiumError').style.display = 'block';
+                    }
+                } catch (e) {
+                    console.error('Error activating Go Premium:', e);
+                    document.getElementById('goPremiumError').textContent = 'Error activating.';
                     document.getElementById('goPremiumError').style.display = 'block';
                 }
-            } catch (e) {
-                console.error('Error activating Go Premium:', e);
-                document.getElementById('goPremiumError').textContent = 'Error activating.';
-                document.getElementById('goPremiumError').style.display = 'block';
             }
-        }
 
-        function closeGoPremiumModal() {
-            document.getElementById('goPremiumModal').style.display = 'none';
-        }
-
-        (function waitForHost() {
-            const MAX_DELAY = 20000;
-            let delay = 100;
-            let attempts = 0;
-            const toastId = 'host-connect-toast';
-
-            function createHostToast() {
-                if (document.getElementById(toastId)) return;
-                const t = document.createElement('div');
-                t.id = toastId;
-                t.style = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 16px;border-radius:6px;z-index:99999;box-shadow:0 4px 12px rgba(0,0,0,0.2);font-family:sans-serif;';
-                document.body.appendChild(t);
+            function closeGoPremiumModal() {
+                document.getElementById('goPremiumModal').style.display = 'none';
             }
-            function showHostToastLocal(msg, type = 'info', duration = 1000) {
-                createHostToast();
-                const t = document.getElementById(toastId);
-                t.textContent = msg;
-                t.style.background = (type === 'error') ? '#b00020' : '#333';
-                t.style.display = 'block';
-                if (t._hideTimeout) { clearTimeout(t._hideTimeout); t._hideTimeout = null; }
-                if (type !== 'error') {
-                    t._hideTimeout = setTimeout(hideHostToastLocal, duration);
+
+            (function waitForHost() {
+                const MAX_DELAY = 20000;
+                let delay = 100;
+                let attempts = 0;
+                const toastId = 'host-connect-toast';
+
+                function createHostToast() {
+                    if (document.getElementById(toastId)) return;
+                    const t = document.createElement('div');
+                    t.id = toastId;
+                    t.style = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 16px;border-radius:6px;z-index:99999;box-shadow:0 4px 12px rgba(0,0,0,0.2);font-family:sans-serif;';
+                    document.body.appendChild(t);
                 }
-            }
-            function hideHostToastLocal() {
-                const t = document.getElementById(toastId);
-                if (t) {
-                    t.style.display = 'none';
+                function showHostToastLocal(msg, type = 'info', duration = 1000) {
+                    createHostToast();
+                    const t = document.getElementById(toastId);
+                    t.textContent = msg;
+                    t.style.background = (type === 'error') ? '#b00020' : '#333';
+                    t.style.display = 'block';
                     if (t._hideTimeout) { clearTimeout(t._hideTimeout); t._hideTimeout = null; }
+                    if (type !== 'error') {
+                        t._hideTimeout = setTimeout(hideHostToastLocal, duration);
+                    }
                 }
-            }
-            window.showHostToast = function(msg, type, duration) {
-                showHostToastLocal(msg, type, duration);
-            }
-            window.hideHostToast = hideHostToastLocal;
-
-            if (document.readyState === 'complete' || document.readyState === 'interactive') {
-                setTimeout(tryAttach, 0);
-            } else {
-                document.addEventListener('DOMContentLoaded', () => setTimeout(tryAttach, 0));
-            }
-        })();
-
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.textContent = message;
-            document.body.appendChild(toast);
-
-            setTimeout(() => toast.classList.add('show'), 10);
-
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => document.body.removeChild(toast), 300);
-            }, 500);
-        }
-
-        async function showStatisticsModal() {
-            try {
-                // Get premium status from AHK
-                let isPremium = false;
-                try {
-                    isPremium = await window.chrome.webview.hostObjects.MacroFuncs.getIsPremium();
-                } catch (e) {
-                    console.error('Could not get premium status:', e);
-                    isPremium = false;
+                function hideHostToastLocal() {
+                    const t = document.getElementById(toastId);
+                    if (t) {
+                        t.style.display = 'none';
+                        if (t._hideTimeout) { clearTimeout(t._hideTimeout); t._hideTimeout = null; }
+                    }
                 }
-                
-                if (isPremium) {
-                    // Get all stats
-                    let fishCaught = 0, sunkenCaught = 0, junkCaught = 0, treasureCaught = 0;
-                    let fishTotal = 0, sunkenTotal = 0, junkTotal = 0, treasureTotal = 0;
-                    
-                    try {
-                        fishCaught = await window.chrome.webview.hostObjects.MacroFuncs.getSessionFish();
-                    } catch (e) {}
-                    try {
-                        sunkenCaught = await window.chrome.webview.hostObjects.MacroFuncs.getSessionSunken();
-                    } catch (e) {}
-                    try {
-                        junkCaught = await window.chrome.webview.hostObjects.MacroFuncs.getSessionJunk();
-                    } catch (e) {}
-                    try {
-                        treasureCaught = await window.chrome.webview.hostObjects.MacroFuncs.getSessionTreasure();
-                    } catch (e) {}
-                    try {
-                        fishTotal = await window.chrome.webview.hostObjects.MacroFuncs.getFishTotal();
-                    } catch (e) {}
-                    try {
-                        sunkenTotal = await window.chrome.webview.hostObjects.MacroFuncs.getSunkenTotal();
-                    } catch (e) {}
-                    try {
-                        junkTotal = await window.chrome.webview.hostObjects.MacroFuncs.getJunkTotal();
-                    } catch (e) {}
-                    try {
-                        treasureTotal = await window.chrome.webview.hostObjects.MacroFuncs.getTreasureTotal();
-                    } catch (e) {}
-                    
-                    // Update UI with stats
-                    document.getElementById('sessionFish').textContent = fishCaught || 0;
-                    document.getElementById('sessionSunken').textContent = sunkenCaught || 0;
-                    document.getElementById('sessionJunk').textContent = junkCaught || 0;
-                    document.getElementById('sessionTreasure').textContent = treasureCaught || 0;
-                    
-                    const sessionTotal = (fishCaught || 0) + (sunkenCaught || 0) + (junkCaught || 0) + (treasureCaught || 0);
-                    document.getElementById('sessionTotal').textContent = sessionTotal;
-                    
-                    document.getElementById('totalFish').textContent = fishTotal || 0;
-                    document.getElementById('totalSunken').textContent = sunkenTotal || 0;
-                    document.getElementById('totalJunk').textContent = junkTotal || 0;
-                    document.getElementById('totalTreasure').textContent = treasureTotal || 0;
-                    
-                    const grandTotal = (fishTotal || 0) + (sunkenTotal || 0) + (junkTotal || 0) + (treasureTotal || 0);
-                    document.getElementById('grandTotal').textContent = grandTotal;
-                    
-                    document.getElementById('premiumStatsView').style.display = 'block';
-                    document.getElementById('goPremiumStatsView').style.display = 'none';
+                window.showHostToast = function (msg, type, duration) {
+                    showHostToastLocal(msg, type, duration);
+                }
+                window.hideHostToast = hideHostToastLocal;
+
+                if (document.readyState === 'complete' || document.readyState === 'interactive') {
+                    setTimeout(tryAttach, 0);
                 } else {
-                    document.getElementById('premiumStatsView').style.display = 'none';
-                    document.getElementById('goPremiumStatsView').style.display = 'block';
+                    document.addEventListener('DOMContentLoaded', () => setTimeout(tryAttach, 0));
                 }
-                
-                document.getElementById('statisticsModal').style.display = 'block';
-            } catch (e) {
-                console.error('Error showing statistics:', e);
-                document.getElementById('goPremiumStatsView').style.display = 'block';
-                document.getElementById('premiumStatsView').style.display = 'none';
-                document.getElementById('statisticsModal').style.display = 'block';
-            }
-        }
+            })();
 
-        function closeStatisticsModal() {
-            document.getElementById('statisticsModal').style.display = 'none';
-        }
-    </script>
+            function showToast(message) {
+                const toast = document.createElement('div');
+                toast.className = 'toast';
+                toast.textContent = message;
+                document.body.appendChild(toast);
+
+                setTimeout(() => toast.classList.add('show'), 10);
+
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => document.body.removeChild(toast), 300);
+                }, 500);
+            }
+
+            async function showStatisticsModal() {
+                try {
+                    // Get premium status from AHK
+                    let isPremium = false;
+                    try {
+                        isPremium = await window.chrome.webview.hostObjects.MacroFuncs.getIsPremium();
+                    } catch (e) {
+                        console.error('Could not get premium status:', e);
+                        isPremium = false;
+                    }
+
+                    if (isPremium) {
+                        // Get all stats
+                        let fishCaught = 0, sunkenCaught = 0, junkCaught = 0, treasureCaught = 0;
+                        let fishTotal = 0, sunkenTotal = 0, junkTotal = 0, treasureTotal = 0;
+
+                        try {
+                            fishCaught = await window.chrome.webview.hostObjects.MacroFuncs.getSessionFish();
+                        } catch (e) { }
+                        try {
+                            sunkenCaught = await window.chrome.webview.hostObjects.MacroFuncs.getSessionSunken();
+                        } catch (e) { }
+                        try {
+                            junkCaught = await window.chrome.webview.hostObjects.MacroFuncs.getSessionJunk();
+                        } catch (e) { }
+                        try {
+                            treasureCaught = await window.chrome.webview.hostObjects.MacroFuncs.getSessionTreasure();
+                        } catch (e) { }
+                        try {
+                            fishTotal = await window.chrome.webview.hostObjects.MacroFuncs.getFishTotal();
+                        } catch (e) { }
+                        try {
+                            sunkenTotal = await window.chrome.webview.hostObjects.MacroFuncs.getSunkenTotal();
+                        } catch (e) { }
+                        try {
+                            junkTotal = await window.chrome.webview.hostObjects.MacroFuncs.getJunkTotal();
+                        } catch (e) { }
+                        try {
+                            treasureTotal = await window.chrome.webview.hostObjects.MacroFuncs.getTreasureTotal();
+                        } catch (e) { }
+
+                        // Update UI with stats
+                        document.getElementById('sessionFish').textContent = fishCaught || 0;
+                        document.getElementById('sessionSunken').textContent = sunkenCaught || 0;
+                        document.getElementById('sessionJunk').textContent = junkCaught || 0;
+                        document.getElementById('sessionTreasure').textContent = treasureCaught || 0;
+
+                        const sessionTotal = (fishCaught || 0) + (sunkenCaught || 0) + (junkCaught || 0) + (treasureCaught || 0);
+                        document.getElementById('sessionTotal').textContent = sessionTotal;
+
+                        document.getElementById('totalFish').textContent = fishTotal || 0;
+                        document.getElementById('totalSunken').textContent = sunkenTotal || 0;
+                        document.getElementById('totalJunk').textContent = junkTotal || 0;
+                        document.getElementById('totalTreasure').textContent = treasureTotal || 0;
+
+                        const grandTotal = (fishTotal || 0) + (sunkenTotal || 0) + (junkTotal || 0) + (treasureTotal || 0);
+                        document.getElementById('grandTotal').textContent = grandTotal;
+
+                        document.getElementById('premiumStatsView').style.display = 'block';
+                        document.getElementById('goPremiumStatsView').style.display = 'none';
+                    } else {
+                        document.getElementById('premiumStatsView').style.display = 'none';
+                        document.getElementById('goPremiumStatsView').style.display = 'block';
+                    }
+
+                    document.getElementById('statisticsModal').style.display = 'block';
+                } catch (e) {
+                    console.error('Error showing statistics:', e);
+                    document.getElementById('goPremiumStatsView').style.display = 'block';
+                    document.getElementById('premiumStatsView').style.display = 'none';
+                    document.getElementById('statisticsModal').style.display = 'block';
+                }
+            }
+
+            function closeStatisticsModal() {
+                document.getElementById('statisticsModal').style.display = 'none';
+            }
+
+            function toggleSidePanel() {
+                const panel = document.getElementById('sidePanel');
+                panel.classList.toggle('open');
+            }
+
+            function closeSidePanel() {
+                const panel = document.getElementById('sidePanel');
+                panel.classList.remove('open');
+            }
+        </script>
 </body>
+
 </html>
