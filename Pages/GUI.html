@@ -741,7 +741,7 @@
                 <button class="cancel-btn" onclick="closeModal()">Close</button>
             </div>
         </div>
-        
+
         <div id="goPremiumModal" class="modal">
             <div class="modal-content" style="max-width: 300px;">
                 <h2>Go Premium</h2>
@@ -862,76 +862,81 @@
                 <input type="checkbox" id="toggleSecondary" style="margin-right: 5px;">
                 <label for="toggleSecondary" style="font-size: 14px; color: #ffffff; margin: 0;">Use Lure</label>
             </div>
-            <div style="display: flex; justify-content: center; align-items: center; gap:8px;">
-                <select id="secondaryKeySelect" class="input"
-                    style="padding: 10px 0.5rem; font-size: 15px; width: 80px; display: none;">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                </select>
-            </div>
-            
-        <div id="autoLureDetails" style="display: none;">
-                <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
-                    <label for="autoLureInterval" style="font-size: 14px; color: #ffffff;">Every X Loops:</label>
-                    <input type="number" id="autoLureInterval" class="input"
-                        style="padding: 10px 0.5rem; font-size: 15px; width: 80px;" min="1" value="5">
-                </div>
-            </div>
-        </div>
+<div style="display: flex; flex-direction: column; align-items: center; gap:8px;">
+    <div id="lureKeyGroup" style="display: flex; justify-content: center; align-items: center; gap:8px;">
+        <label for="secondaryKeySelect" style="font-size: 14px; color: #ffffff;">Lure Key:</label>
+        <select id="secondaryKeySelect" class="input"
+            style="padding: 10px 0.5rem; font-size: 15px; width: 80px;">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+        </select>
+    </div>
 
-        <div class="input-group" style="margin-bottom: 5px;">
-            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
-                <input type="checkbox" id="toggleDarkSeaI1" style="margin-right: 5px;">
-                <label for="toggleDarkSeaI1" style="font-size: 14px; color: #ffffff; margin: 0;">Dark Sea I1</label>
-            </div>
-            <div id="darkSeaI1Details" style="display: none;">
-                <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
-                    <label for="darkSeaI1Key" style="font-size: 14px; color: #ffffff;">Soap Key:</label>
-                    <select id="darkSeaI1Key" class="input" style="padding: 10px 0.5rem; font-size: 15px; width: 80px;">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div id="autoFleetRepairGroup" class="input-group" style="display: none; margin-bottom: 5px;">
-            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
-                <input type="checkbox" id="toggleAutoFleetRepair" style="margin-right: 5px;">
-                <label for="toggleAutoFleetRepair" style="font-size: 14px; color: #ffffff; margin: 0;">Use Auto Fleet
-                    Repair</label>
-            </div>
-            <div id="autoFleetRepairDetails" style="display: none;">
-                <div
-                    style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 5px;">
-                    <label for="autoFleetRepairKey" style="font-size: 14px; color: #ffffff;">Repair Key:</label>
-                    <input type="text" id="autoFleetRepairKey" class="input"
-                        style="padding: 10px 0.5rem; font-size: 15px; width: 80px;" placeholder="e.g., R">
-                </div>
-                <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
-                    <label for="autoFleetRepairInterval" style="font-size: 14px; color: #ffffff;">Every X Loops:</label>
-                    <input type="number" id="autoFleetRepairInterval" class="input"
-                        style="padding: 10px 0.5rem; font-size: 15px; width: 80px;" min="1" value="5">
-                </div>
-            </div>
+    <div id="autoLureDetails" style="display: none;">
+        <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+            <label for="autoLureInterval" style="font-size: 14px; color: #ffffff;">Every X Loops:</label>
+            <input type="number" id="autoLureInterval" class="input"
+                style="padding: 10px 0.5rem; font-size: 15px; width: 80px;" min="1" value="5">
         </div>
     </div>
+</div>
+
+            <div class="input-group" style="margin-bottom: 5px;">
+                <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                    <input type="checkbox" id="toggleDarkSeaI1" style="margin-right: 5px;">
+                    <label for="toggleDarkSeaI1" style="font-size: 14px; color: #ffffff; margin: 0;">Dark Sea I1</label>
+                </div>
+                <div id="darkSeaI1Details" style="display: none;">
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+                        <label for="darkSeaI1Key" style="font-size: 14px; color: #ffffff;">Soap Key:</label>
+                        <select id="darkSeaI1Key" class="input"
+                            style="padding: 10px 0.5rem; font-size: 15px; width: 80px;">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div id="autoFleetRepairGroup" class="input-group" style="display: none; margin-bottom: 5px;">
+                <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                    <input type="checkbox" id="toggleAutoFleetRepair" style="margin-right: 5px;">
+                    <label for="toggleAutoFleetRepair" style="font-size: 14px; color: #ffffff; margin: 0;">Use Auto
+                        Fleet
+                        Repair</label>
+                </div>
+                <div id="autoFleetRepairDetails" style="display: none;">
+                    <div
+                        style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 5px;">
+                        <label for="autoFleetRepairKey" style="font-size: 14px; color: #ffffff;">Repair Key:</label>
+                        <input type="text" id="autoFleetRepairKey" class="input"
+                            style="padding: 10px 0.5rem; font-size: 15px; width: 80px;" placeholder="e.g., R">
+                    </div>
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+                        <label for="autoFleetRepairInterval" style="font-size: 14px; color: #ffffff;">Every X
+                            Loops:</label>
+                        <input type="number" id="autoFleetRepairInterval" class="input"
+                            style="padding: 10px 0.5rem; font-size: 15px; width: 80px;" min="1" value="5">
+                    </div>
+                </div>
+            </div>
+        </div>
         <script>
             let trialTimerInterval = 0;
             let remainingSeconds = 0;
@@ -1009,6 +1014,8 @@
                     lureDetails.style.display = toggleSecondary ? 'block' : 'none';
                     const secondarySelect = document.getElementById('secondaryKeySelect');
                     secondarySelect.style.display = toggleSecondary ? 'block' : 'none';
+                    const lureGroup = document.getElementById('lureKeyGroup');
+                    lureGroup.style.display = toggleSecondary ? 'flex' : 'none';
 
                     await startTrialTimer();
                     console.log('UI initialized successfully');
@@ -1281,6 +1288,14 @@
                 if (key) {
                     callAHK('updateDarkSeaI1Key', key);
                 }
+            });
+
+            document.getElementById('toggleSecondary').addEventListener('change', (e) => {
+                const lureGroup = document.getElementById('lureKeyGroup');
+                lureGroup.style.display = e.target.checked ? 'flex' : 'none';
+                const lureDetails = document.getElementById('autoLureDetails');
+                lureDetails.style.display = e.target.checked ? 'block' : 'none';
+                callAHK('updateToggleSecondary', e.target.checked);
             });
 
             async function refreshTimer() {
