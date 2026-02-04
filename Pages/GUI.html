@@ -1,590 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="auto">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FISHING MACRO V2.8</title>
-    <style>
-        :root {
-            --bg-primary: #0a0520;
-            --accent-cyan: #00bfff;
-            --accent-purple: #8a2be2;
-            --panel-bg: rgba(255, 255, 255, 0.04);
-            --muted: rgba(255, 255, 255, 0.95);
-            --glass: rgba(255, 255, 255, 0.06);
-            --btn-text: #001217;
-            --max-width: 380px
-        }
+    <title>FISHING MACRO V2.8.2</title>
 
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            color: var(--muted);
-            background: var(--bg-primary);
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        .container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(ellipse at 20% 30%, rgba(138, 43, 226, 0.45) 0%, rgba(138, 43, 226, 0) 55%),
-                radial-gradient(ellipse at 80% 50%, rgba(0, 191, 255, 0.45) 0%, rgba(0, 191, 255, 0) 65%),
-                linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(10, 5, 32, 0.9) 100%);
-            background-blend-mode: overlay, screen;
-            overflow: hidden;
-            animation: aurora-drift 40s infinite alternate ease-in-out;
-            z-index: -1;
-            filter: saturate(1.05) contrast(1.05);
-        }
-
-        .container::before {
-            content: "";
-            position: absolute;
-            width: 200%;
-            height: 400%;
-            top: -40%;
-            left: -40%;
-            background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 60px);
-            animation: grid-shift 60s linear infinite;
-            opacity: 0.35;
-        }
-
-        .container::after {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, transparent 72%, rgba(10, 5, 32, 0.92) 100%);
-            animation: aurora-pulse 14s infinite alternate;
-            opacity: 0.9;
-        }
-
-        @keyframes aurora-drift {
-            0% {
-                background-position: 0% 0%, 0% 0%;
-                filter: hue-rotate(0deg) brightness(0.98);
-            }
-
-            50% {
-                background-position: -6% -3%, 4% 6%;
-                filter: hue-rotate(25deg) brightness(1.02);
-            }
-
-            100% {
-                background-position: 4% 8%, -6% -3%;
-                filter: hue-rotate(50deg) brightness(0.98);
-            }
-        }
-
-        @keyframes grid-shift {
-            0% {
-                transform: translate(0, 0);
-            }
-
-            100% {
-                transform: translate(-20%, -20%);
-            }
-        }
-
-        @keyframes aurora-pulse {
-            0% {
-                opacity: 0.9;
-                transform: scale(1);
-            }
-
-            50% {
-                opacity: 0.75;
-                transform: scale(1.02);
-            }
-
-            100% {
-                opacity: 0.9;
-                transform: scale(1);
-            }
-        }
-
-        .ahk-titleBar {
-            cursor: default;
-            user-select: none;
-            width: 95%;
-            display: flex;
-            align-items: center;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.12));
-            height: 28px;
-            flex-shrink: 0;
-            position: relative;
-            z-index: 20;
-            padding: 0 8px;
-            gap: px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
-        }
-
-        .ahk-title-btn {
-            padding: 4px 8px;
-            cursor: pointer;
-            vertical-align: middle;
-            font-family: inherit;
-            font-size: 12px;
-            color: var(--muted);
-            border-radius: 6px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.12s, transform 0.08s;
-        }
-
-        #ahkTitleBar {
-            -webkit-app-region: drag;
-            flex-grow: 1;
-            font-weight: 700;
-            letter-spacing: 0.6px;
-            color: #ffffff;
-        }
-
-        body .ahk-title-btn-restore {
-            display: none;
-        }
-
-        body.ahk-maximized .ahk-title-btn-restore {
-            display: block;
-        }
-
-        body.ahk-maximized .ahk-title-btn-maximize {
-            display: none;
-        }
-
-        .ahk-title-btn:hover {
-            background: rgba(255, 255, 255, 0.03);
-            transform: translateY(-1px);
-        }
-
-        .ahk-title-btn-close:hover {
-            background: #dc3545;
-            color: #fff;
-        }
-
-        .ahk-title-btn-close {
-            color: #ffcece;
-        }
-
-        .ahk-title-btn[title] {
-            font-weight: 600;
-        }
-
-        .ahk-title-btn-close[title] {
-            font-weight: 700;
-        }
-
-        .b-example-divider {
-            display: none;
-            height: 1px;
-            background-color: #dee2e6;
-            flex-shrink: 0;
-            position: relative;
-            z-index: 10;
-        }
-
-        .main-content {
-            width: 100%;
-            height: calc(100% - 52px);
-            background-color: transparent;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            padding: 10px;
-            box-sizing: border-box;
-            overflow-y: auto;
-            flex-grow: 1;
-            position: relative;
-            z-index: 10;
-        }
-
-        .main-content::-webkit-scrollbar {
-            display: none;
-        }
-
-        .main-content {
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .main-content h1 {
-            font-size: 18px;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 10px;
-            color: #ffffff;
-        }
-
-        .main-content p {
-            font-size: 20px;
-            text-align: center;
-            margin-bottom: 15px;
-            color: #ffffff;
-        }
-
-        .button-row {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 320px;
-            margin-bottom: 10px;
-        }
-
-        .button-single {
-            width: 100%;
-        }
-
-        .button-row-center {
-            justify-content: center;
-        }
-
-        .main-content button {
-            padding: 10px 14px;
-            font-size: 13px;
-            cursor: pointer;
-            background: var(--btn-bg, var(--accent-cyan));
-            color: var(--btn-text);
-            border: none;
-            border-radius: 10px;
-            width: 48%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
-            transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
-            font-weight: 600;
-        }
-
-        .main-content button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
-            filter: brightness(0.98);
-        }
-
-        .input-group {
-            width: 100%;
-            max-width: var(--max-width);
-            margin-bottom: 10px;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 15px;
-            margin-bottom: 6px;
-            color: white;
-        }
-
-        .input-group .input {
-            width: 100%;
-            font-size: 13px;
-            box-sizing: border-box;
-        }
-
-        .input {
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            background: rgba(255, 255, 255, 0.02);
-            color: var(--muted);
-            padding: 10px 12px;
-            transition: background 0.15s, box-shadow 0.12s;
-            cursor: pointer;
-            box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.18);
-        }
-
-        .input:focus {
-            outline: none;
-            background: rgba(255, 255, 255, 0.03);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
-        }
-
-        select.input {
-            color: var(--muted);
-            background: rgba(255, 255, 255, 0.03);
-            -webkit-appearance: menulist;
-            appearance: menulist;
-        }
-
-        select.input option {
-            background: var(--bg-primary);
-            color: var(--muted);
-        }
-
-        select.input:focus,
-        select.input:active {
-            background: rgba(255, 255, 255, 0.04);
-        }
-
-        .separator {
-            height: 1px;
-            background: rgba(255, 255, 255, 0.06);
-            width: 100%;
-            max-width: var(--max-width);
-            margin: 15px 0;
-        }
-
-        .license-box {
-            width: 90%;
-            max-width: 320px;
-            margin-top: 12px;
-            padding: 12px;
-            border-radius: 12px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.35));
-            border-left: 4px solid var(--accent-cyan);
-            color: var(--muted);
-            text-align: center;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .license-status {
-            font-weight: bold;
-            font-size: 14px;
-            margin-bottom: 4px;
-        }
-
-        .license-time {
-            font-size: 13px;
-            margin-bottom: 8px;
-            opacity: 0.9;
-        }
-
-        .license-btn {
-            width: 100%;
-            margin-bottom: 5px;
-        }
-
-        .refresh-btn {
-            width: 100%;
-            padding: 5px;
-            font-size: 11px;
-            background-color: #555;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .refresh-btn:hover {
-            background-color: #777;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        .modal-content {
-            background: rgba(0, 0, 0, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            margin: 80% auto;
-            transform: translateY(-50%);
-            padding: 15px;
-            width: 85%;
-            max-width: 300px;
-            color: #ffffff;
-            text-align: center;
-            animation: slideIn 0.3s ease-out;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .modal h2 {
-            margin-bottom: 15px;
-            font-size: 20px;
-        }
-
-        .modal p {
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-
-        .modal input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 8px;
-            border: 1px solid #FEBF00;
-            background: #e2e2e2;
-            color: #000;
-        }
-
-        .modal button {
-            padding: 10px 20px;
-            margin: 5px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .modal .unlock-btn {
-            background: #28a745;
-            color: white;
-        }
-
-        .modal .unlock-btn:hover {
-            background: #218838;
-        }
-
-        .modal .cancel-btn {
-            background: #dc3545;
-            color: white;
-        }
-
-        .modal .cancel-btn:hover {
-            background: #c82333;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .toast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.9);
-            color: #ffffff;
-            padding: 10px 20px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            font-size: 14px;
-            z-index: 2000;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        .toast.show {
-            opacity: 1;
-        }
-
-        #sideTab {
-            position: fixed;
-            top: 25%;
-            right: 0;
-            transform: translateY(-50%);
-            width: 30px;
-            height: 60px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.438), rgba(0, 0, 0, 0.3));
-            border-radius: 10px 0 0 10px;
-            cursor: pointer;
-            z-index: 15;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: -4px 0 10px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s ease, background 0.2s;
-        }
-
-        #sideTab:hover {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.4));
-        }
-
-        #sideTab::before {
-            content: "⚙️";
-            font-size: 16px;
-            color: var(--muted);
-        }
-
-        #sidePanel {
-            position: fixed;
-            top: 0;
-            right: -300px;
-            width: 250px;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            border-left: 2px solid var(--accent-cyan);
-            box-shadow: -10px 0 20px rgba(0, 0, 0, 0.7);
-            z-index: 14;
-            padding: 20px;
-            overflow-y: auto;
-            transition: right 0.3s ease;
-        }
-
-        #sidePanel.open {
-            right: 30px;
-        }
-
-        #sidePanel h3 {
-            color: var(--accent-cyan);
-            margin-bottom: 15px;
-            font-size: 18px;
-            text-align: center;
-        }
-
-        #sidePanel .input-group {
-            margin-bottom: 15px;
-        }
-
-        #sidePanel .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            color: var(--muted);
-            font-size: 20px;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        #sidePanel .close-btn:hover {
-            color: var(--accent-cyan);
-        }
-
-        #keybindsSection .input {
-            width: 220px;
-            max-width: 220px;
-            display: block;
-            margin: 0 auto;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
     <div class="ahk-titleBar">
         <span class="px-2 py-1" id="ahkTitleBar">FISHING MACRO</span>
@@ -595,18 +17,14 @@
     </div>
     <div class="main-content">
         <div class="container"></div>
-
-        <p>FISHING MACRO V2.8</p>
-
+        <p>FISHING MACRO V2.8.2</p>
         <div class="button-row">
             <button class="input" id="startMacro">Start Macro</button>
             <button class="input" id="reloadMacro">Reload Macro</button>
         </div>
-
         <div class="button-row button-row-center">
             <button class="input button-single" id="viewStats">📊 View Statistics</button>
         </div>
-
         <div class="input-group">
             <label for="methodSelect">Select Fishing Method:</label>
             <select id="methodSelect" class="input">
@@ -616,20 +34,16 @@
                 <option value="magic">Magic Bait</option>
             </select>
         </div>
-
         <div class="button-row button-row-center">
             <button class="input button-single" id="fishTrigger">Screenshot Exclamation Mark</button>
         </div>
-
         <div class="button-row">
             <button class="input" id="fishCaughtArea">Fish Caught Area</button>
             <button class="input" id="fishTriggerArea">Fish Trigger Area</button>
         </div>
-
         <div class="button-row button-row-center">
             <button class="input button-single" id="baitArea">Highlight Bait Area</button>
         </div>
-
         <div class="input-group" style="margin-bottom: 5px;">
             <label for="keySelect" style="font-size: 16px; margin-bottom: 3px;">Fishing Rod Key (0-9):</label>
             <div style="display: flex; justify-content: center; align-items: center;">
@@ -647,18 +61,15 @@
                 </select>
             </div>
         </div>
-
         <div class="input-group">
             <label for="fishTriggerConfidence">Fish Trigger Confidence (0-100):</label>
             <input type="number" id="fishTriggerConfidence" class="input"
                 style="padding: 10px 0.5rem; font-size: 15px; width: 80px; display: block; margin: 0 auto;" min="0"
                 max="100" value="60">
         </div>
-
         <div class="button-row button-row-center">
             <button class="input button-single" id="keybindsToggle">Keybinds</button>
         </div>
-
         <div id="keybindsSection" style="display: none;">
             <div class="input-group">
                 <label for="cameraAdjustKey">Camera Adjust Key:</label>
@@ -680,7 +91,6 @@
                 <label for="exitKey">Exit Key:</label>
                 <input type="text" id="exitKey" class="input" placeholder="e.g., F4 or Ctrl+Q">
             </div>
-
             <div class="input-group"
                 style="text-align: center; background: rgba(255,255,255,0.02); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); margin: 0 auto; max-width: 360px;">
                 <h3 style="color: #ffffff; font-size: 16px; margin-bottom: 8px;">How to Set Up Keybinds</h3>
@@ -716,20 +126,17 @@
                 </p>
             </div>
         </div>
-
         <div id="licenseBox" class="license-box">
             <div id="licenseStatus" class="license-status">Status: ...</div>
             <div id="licenseTime" class="license-time">Time remaining: ...</div>
             <button id="premiumBtn" class="input license-btn" onclick="premiumAction()">Go Premium</button>
         </div>
-
         <h1>Created By Vunoxoulia</h1>
         <p style="text-align:center; margin-top:6px;"><a id="setupGuideLink" href="https://youtu.be/ds3XSLw2fcc"
                 target="_blank" style="color: #00bfff; text-decoration: underline;">Set up guide</a> | <a
                 id="discordLink" href="https://discord.gg/m6hbdF5H" target="_blank"
                 style="color: #5865F2; text-decoration: none; font-size: 18px;" title="Join our Discord">🔗 Discord</a>
         </p>
-
         <div id="trialModal" class="modal">
             <div class="modal-content">
                 <h2>Trial Expired</h2>
@@ -740,7 +147,6 @@
                 <button class="cancel-btn" onclick="closeModal()">Close</button>
             </div>
         </div>
-
         <div id="goPremiumModal" class="modal">
             <div class="modal-content" style="max-width: 300px;">
                 <h2>Go Premium</h2>
@@ -763,7 +169,6 @@
                 </div>
             </div>
         </div>
-
         <div id="statisticsModal" class="modal" style="display: none;">
             <div class="modal-content">
                 <h2>📊 FISHING STATISTICS</h2>
@@ -796,7 +201,6 @@
                                 <span id="sessionTotal" style="color: var(--accent-purple); font-weight: bold;">0</span>
                             </div>
                         </div>
-
                         <h3 style="color: var(--accent-cyan); margin-top: 20px; margin-bottom: 10px;">Overall Total (All
                             Sessions)</h3>
                         <div
@@ -824,7 +228,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div id="goPremiumStatsView" style="text-align: center;">
                         <p style="font-size: 16px; margin: 3px 0;">Track your fishing progress with detailed statistics!
                         </p>
@@ -844,14 +247,12 @@
                             style="width: 100%; margin-bottom: 10px;">🔓 GO PREMIUM NOW</button>
                     </div>
                 </div>
-
                 <div style="margin-top: 20px; text-align: center;">
                     <button class="cancel-btn" onclick="closeStatisticsModal()" style="width: 100%;">Close</button>
                 </div>
             </div>
         </div>
     </div>
-
     <div id="sideTab" title="Settings" onclick="toggleSidePanel()"></div>
     <div id="sidePanel">
         <button class="close-btn" onclick="closeSidePanel()">×</button>
@@ -862,6 +263,7 @@
                 <label for="automaticAreas" style="font-size: 14px; color: #ffffff; margin: 0;">Automatic Areas</label>
             </div>
         </div>
+                <div style="padding: 10px 0.5rem; font-size: 15px; width: 80px;"><!--Divider--></div>
         <div class="input-group" style="margin-bottom: 5px;">
             <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
                 <input type="checkbox" id="toggleSecondary" style="margin-right: 5px;">
@@ -884,7 +286,6 @@
                         <option value="9">9</option>
                     </select>
                 </div>
-
                 <div id="autoLureDetails" style="display: none;">
                     <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
                         <label for="autoLureInterval" style="font-size: 14px; color: #ffffff;">Do once after x caught:</label>
@@ -893,7 +294,7 @@
                     </div>
                 </div>
             </div>
-
+                <div style="padding: 10px 0.5rem; font-size: 15px; width: 80px;"><!--Divider--></div>
             <div class="input-group" style="margin-bottom: 5px;">
                 <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
                     <input type="checkbox" id="toggleDarkSeaI1" style="margin-right: 5px;">
@@ -918,6 +319,7 @@
                     </div>
                 </div>
             </div>
+                <div style="padding: 10px 0.5rem; font-size: 15px; width: 80px;"><!--Divider--></div>
             <div id="autoFleetRepairGroup" class="input-group" style="display: none; margin-bottom: 5px;">
                 <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
                     <input type="checkbox" id="toggleAutoFleetRepair" style="margin-right: 5px;">
@@ -937,8 +339,13 @@
                         <input type="number" id="autoFleetRepairInterval" class="input"
                             style="padding: 10px 0.5rem; font-size: 15px; width: 80px;" min="1" value="5">
                     </div>
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 5px;">
+                        <button class="input" id="setRepairPos" style="width: 120px;">"Repair" Mouse Position </button>
+                        <button class="input" id="setRepairYesPos" style="width: 120px;">"Yes" Mouse Positon</button>
+                    </div>
                 </div>
             </div>
+                <div style="padding: 10px 0.5rem; font-size: 15px; width: 80px;"><!--Divider--></div>
             <div id="fleetResupplyGroup" class="input-group" style="display: none; margin-bottom: 5px;">
                 <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
                     <input type="checkbox" id="toggleFleetResupply" style="margin-right: 5px;">
@@ -968,14 +375,18 @@
                         <input type="number" id="fleetResupplyInterval" class="input"
                             style="padding: 10px 0.5rem; font-size: 15px; width: 80px;" min="1" value="5">
                     </div>
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+                        <button class="input" id="setResupplyPos" style="width: 120px;">"Resupply" Mouse Position</button>
+                        <button class="input" id="setResupplyYesPos" style="width: 120px;">"Yes" Mouse Position</button>
+                    </div>
                 </div>
+                    <div style="padding: 10px 0.5rem; font-size: 15px; width: 80px;"><!--Divider--></div>
                 <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
                     <button class="input" id="startAutoFleetRepair" style="width: 100%;">Start Stand-Alone Fleet
                         Macro</button>
                 </div>
             </div>
-
-            <!-- New Sound Beep Feature (added just below "Start Stand-Alone Fleet Macro") -->
+                    <div style="padding: 10px 0.5rem; font-size: 15px; width: 80px;"><!--Divider--></div>
             <div id="soundBeepGroup" class="input-group" style="margin-bottom: 5px;">
                 <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
                     <input type="checkbox" id="toggleSoundBeep" style="margin-right: 5px;">
@@ -1000,731 +411,6 @@
             </div>
         </div>
     </div>
-    <script>
-        let trialTimerInterval = 0;
-        let remainingSeconds = 0;
-        let removalConfirmed = false;
-
-        function callAHK(funcName, ...args) {
-            try {
-                const macroFuncs = window.chrome.webview.hostObjects.MacroFuncs;
-                if (macroFuncs && macroFuncs[funcName]) {
-                    macroFuncs[funcName](...args);
-                } else {
-                    console.error(`AHK function '${funcName}' not found.`);
-                }
-            } catch (e) {
-                console.error('Error calling AHK function:', e);
-            }
-        }
-
-        async function initializeUI() {
-            console.log('Initializing UI...');
-            try {
-                if (!window.chrome || !window.chrome.webview || !window.chrome.webview.hostObjects || !window.chrome.webview.hostObjects.MacroFuncs) {
-                    console.error('Host objects not ready. Retrying in 1 second...');
-                    setTimeout(initializeUI, 1000);
-                    return;
-                }
-
-                await window.chrome.webview.hostObjects.MacroFuncs.loadAllSettings();
-
-                const autoFleetRepairEnabled = await window.chrome.webview.hostObjects.MacroFuncs.getAutoFleetRepairEnabled();
-                console.log('Loaded autoFleetRepairEnabled:', autoFleetRepairEnabled);
-                document.getElementById('toggleAutoFleetRepair').checked = autoFleetRepairEnabled;
-                const autoFleetRepairKey = await window.chrome.webview.hostObjects.MacroFuncs.getAutoFleetRepairKey();
-                console.log('Loaded autoFleetRepairKey:', autoFleetRepairKey);
-                document.getElementById('autoFleetRepairKey').value = autoFleetRepairKey;
-                const autoFleetRepairInterval = await window.chrome.webview.hostObjects.MacroFuncs.getAutoFleetRepairInterval();
-                console.log('Loaded autoFleetRepairInterval:', autoFleetRepairInterval);
-                document.getElementById('autoFleetRepairInterval').value = autoFleetRepairInterval;
-                console.log('Setting autoFleetRepairInterval to:', autoFleetRepairInterval);
-                const details = document.getElementById('autoFleetRepairDetails');
-                details.style.display = autoFleetRepairEnabled ? 'block' : 'none';
-                const isPremium = await window.chrome.webview.hostObjects.MacroFuncs.getIsPremium();
-                document.getElementById('autoFleetRepairGroup').style.display = isPremium ? 'block' : 'none';
-                const toggleDarkSeaI1 = await window.chrome.webview.hostObjects.MacroFuncs.getToggleDarkSeaI1();
-                document.getElementById('toggleDarkSeaI1').checked = toggleDarkSeaI1;
-                const darkSeaI1Key = await window.chrome.webview.hostObjects.MacroFuncs.getDarkSeaI1Key();
-                document.getElementById('darkSeaI1Key').value = darkSeaI1Key;
-                const darkSeaI1Details = document.getElementById('darkSeaI1Details');
-                darkSeaI1Details.style.display = toggleDarkSeaI1 ? 'block' : 'none';
-
-                const triggerConfidence = await window.chrome.webview.hostObjects.MacroFuncs.getFishTriggerConfidence();
-                document.getElementById('fishTriggerConfidence').value = triggerConfidence;
-                const method = await window.chrome.webview.hostObjects.MacroFuncs.getCurrentMethod();
-                document.getElementById('methodSelect').value = method.toLowerCase();
-                const key = await window.chrome.webview.hostObjects.MacroFuncs.getCurrentKey();
-                document.getElementById('keySelect').value = key;
-                const secondaryKey = await window.chrome.webview.hostObjects.MacroFuncs.getCurrentSecondaryKey();
-                document.getElementById('secondaryKeySelect').value = secondaryKey;
-                const toggleSecondary = await window.chrome.webview.hostObjects.MacroFuncs.getToggleSecondary();
-                document.getElementById('toggleSecondary').checked = toggleSecondary;
-
-                const cameraAdjustKey = await window.chrome.webview.hostObjects.MacroFuncs.getCameraAdjustKey();
-                document.getElementById('cameraAdjustKey').value = cameraAdjustKey;
-                const startMacroKey = await window.chrome.webview.hostObjects.MacroFuncs.getStartMacroKey();
-                document.getElementById('startMacroKey').value = startMacroKey;
-                const reloadMacroKey = await window.chrome.webview.hostObjects.MacroFuncs.getReloadMacroKey();
-                document.getElementById('reloadMacroKey').value = reloadMacroKey;
-                const screenshotKey = await window.chrome.webview.hostObjects.MacroFuncs.getScreenshotKey();
-                document.getElementById('screenshotKey').value = screenshotKey;
-                const exitKey = await window.chrome.webview.hostObjects.MacroFuncs.getExitKey();
-                document.getElementById('exitKey').value = exitKey;
-
-                const autoLureInterval = await window.chrome.webview.hostObjects.MacroFuncs.getAutoLureInterval();
-                document.getElementById('autoLureInterval').value = autoLureInterval;
-                const lureDetails = document.getElementById('autoLureDetails');
-                lureDetails.style.display = toggleSecondary ? 'block' : 'none';
-                const secondarySelect = document.getElementById('secondaryKeySelect');
-                secondarySelect.style.display = toggleSecondary ? 'block' : 'none';
-                const lureGroup = document.getElementById('lureKeyGroup');
-                lureGroup.style.display = toggleSecondary ? 'flex' : 'none';
-
-                const toggleFleetResupply = await window.chrome.webview.hostObjects.MacroFuncs.getToggleFleetResupply();
-                document.getElementById('toggleFleetResupply').checked = toggleFleetResupply;
-                const fleetResupplyKey = await window.chrome.webview.hostObjects.MacroFuncs.getFleetResupplyKey();
-                document.getElementById('fleetResupplyKey').value = fleetResupplyKey;
-                const fleetResupplyInterval = await window.chrome.webview.hostObjects.MacroFuncs.getFleetResupplyInterval();
-                document.getElementById('fleetResupplyInterval').value = fleetResupplyInterval;
-                const fleetResupplyDetails = document.getElementById('fleetResupplyDetails');
-                fleetResupplyDetails.style.display = toggleFleetResupply ? 'block' : 'none';
-                document.getElementById('fleetResupplyGroup').style.display = isPremium ? 'block' : 'none';
-
-                const toggleSoundBeep = await window.chrome.webview.hostObjects.MacroFuncs.getToggleSoundBeep();
-                document.getElementById('toggleSoundBeep').checked = toggleSoundBeep;
-                const soundBeepFrequency = await window.chrome.webview.hostObjects.MacroFuncs.getSoundBeepFrequency();
-                document.getElementById('soundBeepFrequency').value = soundBeepFrequency;
-                const soundBeepDuration = await window.chrome.webview.hostObjects.MacroFuncs.getSoundBeepDuration();
-                document.getElementById('soundBeepDuration').value = soundBeepDuration;
-                const soundBeepInterval = await window.chrome.webview.hostObjects.MacroFuncs.getSoundBeepInterval();
-                document.getElementById('soundBeepInterval').value = soundBeepInterval;
-                const soundBeepDetails = document.getElementById('soundBeepDetails');
-                soundBeepDetails.style.display = toggleSoundBeep ? 'block' : 'none';
-
-                const automaticAreas = await window.chrome.webview.hostObjects.MacroFuncs.getAutomaticAreas();
-                document.getElementById('automaticAreas').checked = automaticAreas;
-                const buttonsToHide = ['fishCaughtArea', 'fishTriggerArea', 'baitArea'];
-                buttonsToHide.forEach(id => {
-                    const button = document.getElementById(id);
-                    if (button) {
-                        button.style.display = automaticAreas ? 'none' : 'inline-flex';
-                    }
-                });
-
-                document.getElementById('automaticAreas').addEventListener('change', (e) => {
-                    const isAutomatic = e.target.checked;
-                    buttonsToHide.forEach(id => {
-                        const button = document.getElementById(id);
-                        if (button) {
-                            button.style.display = isAutomatic ? 'none' : 'inline-flex';
-                        }
-                    });
-                    console.log('Automatic Areas changed to:', isAutomatic);
-                    callAHK('updateAutomaticAreas', isAutomatic);
-                });
-
-                await startTrialTimer();
-                console.log('UI initialized successfully');
-            } catch (e) {
-                console.error('Error initializing UI:', e);
-                setTimeout(initializeUI, 50);
-            }
-        }
-
-        async function startTrialTimer() {
-            console.log('Fetching initial remaining time and license status from AHK...');
-            try {
-                const initialRemaining = await window.chrome.webview.hostObjects.MacroFuncs.getAOVunoxTrialRemainingTime();
-                console.log('Initial remaining time from AHK:', initialRemaining);
-                remainingSeconds = initialRemaining || 0;
-                let license = { status: "Unknown", remaining: 0 };
-                try {
-                    license = await window.chrome.webview.hostObjects.MacroFuncs.getLicenseStatus();
-                    console.log('License status from AHK:', license);
-                } catch (e) {
-                    console.error('Error fetching license status:', e);
-                }
-                if (trialTimerInterval) {
-                    clearInterval(trialTimerInterval);
-                }
-                updateTimerDisplay(license);
-                if (remainingSeconds > 0 && license.status !== "Premium") {
-                    console.log('Starting countdown timer with', remainingSeconds, 'seconds');
-                    trialTimerInterval = setInterval(() => {
-                        remainingSeconds--;
-                        updateTimerDisplay(license);
-                        if (remainingSeconds <= 0) {
-                            clearInterval(trialTimerInterval);
-                            trialTimerInterval = null;
-                            updateTimerDisplay(license);
-                        }
-                    }, 1000);
-                } else {
-                    console.log('No time remaining or premium, not starting timer');
-                }
-            } catch (e) {
-                console.error('Error starting trial timer:', e);
-                remainingSeconds = 0;
-                updateTimerDisplay({ status: "Expired", remaining: 0 });
-            }
-        }
-
-        function updateTimerDisplay(license) {
-            console.log('Updating timer display with remainingSeconds:', remainingSeconds, 'and license:', license);
-            const statusEl = document.getElementById("licenseStatus");
-            const timeEl = document.getElementById("licenseTime");
-            const btn = document.getElementById("premiumBtn");
-
-            window.chrome.webview.hostObjects.MacroFuncs.getIsPremium().then(isPremium => {
-                if (isPremium || (license && license.status === "Premium")) {
-                    statusEl.textContent = "Status: Premium";
-                    timeEl.textContent = "Time remaining: Unlimited";
-                    btn.textContent = "Remove Premium";
-                    closeModal();
-                } else if (remainingSeconds > 0) {
-                    statusEl.textContent = "Status: Free Trial";
-                    const min = Math.floor(remainingSeconds / 60);
-                    const sec = remainingSeconds % 60;
-                    timeEl.textContent = "Time remaining: " + String(min).padStart(2, "0") + ":" + String(sec).padStart(2, "0");
-                    btn.textContent = "Go Premium";
-                    closeModal();
-                } else {
-                    statusEl.textContent = "Status: Trial Expired";
-                    timeEl.textContent = "Time remaining: 00:00";
-                    btn.textContent = "Go Premium";
-                }
-            }).catch(err => {
-                console.error('Error getting premium status:', err);
-                if (license && license.status === "Premium") {
-                    statusEl.textContent = "Status: Premium";
-                    timeEl.textContent = "Time remaining: Unlimited";
-                    btn.textContent = "Remove Premium";
-                } else {
-                    statusEl.textContent = "Status: Trial Expired";
-                    timeEl.textContent = "Time remaining: 00:00";
-                    btn.textContent = "Go Premium";
-                }
-            });
-        }
-
-        async function showModal() {
-            console.log('Showing trial modal...');
-            try {
-                const modal = document.getElementById('trialModal');
-                modal.style.display = 'block';
-                modal.style.pointerEvents = 'auto';
-                const content = modal.querySelector('.modal-content');
-                if (content) {
-                    content.style.pointerEvents = 'auto';
-                }
-            } catch (e) {
-                console.error('Error showing modal:', e);
-            }
-        }
-
-        document.getElementById('toggleSoundBeep').addEventListener('change', (e) => {
-            const details = document.getElementById('soundBeepDetails');
-            details.style.display = e.target.checked ? 'block' : 'none';
-            callAHK('updateToggleSoundBeep', e.target.checked);
-        });
-
-        document.getElementById('soundBeepFrequency').addEventListener('change', (e) => {
-            const level = parseInt(e.target.value, 10);
-            if (level >= 0 && level <= 100) {
-                callAHK('updateSoundBeepFrequency', level);
-            } else {
-                showToast('Volume Level must be between 0 and 100.');
-                e.target.value = 50;
-            }
-        });
-
-        document.getElementById('soundBeepDuration').addEventListener('change', (e) => {
-            const seconds = parseFloat(e.target.value);
-            if (seconds >= 0.1 && seconds <= 10) {
-                callAHK('updateSoundBeepDuration', seconds);
-            } else {
-                showToast('Duration must be between 0.1 and 10 seconds.');
-                e.target.value = 0.15;
-            }
-        });
-
-        document.getElementById('soundBeepInterval').addEventListener('change', (e) => {
-            const interval = parseInt(e.target.value, 10);
-            if (interval >= 1) {
-                callAHK('updateSoundBeepInterval', interval);
-            } else {
-                showToast('Interval must be at least 1.');
-                e.target.value = 10;
-            }
-        });
-
-        document.getElementById('toggleFleetResupply').addEventListener('change', (e) => {
-            const details = document.getElementById('fleetResupplyDetails');
-            details.style.display = e.target.checked ? 'block' : 'none';
-            callAHK('updateToggleFleetResupply', e.target.checked);
-        });
-
-        document.getElementById('fleetResupplyKey').addEventListener('change', (e) => {
-            const key = e.target.value.trim();
-            if (key) {
-                callAHK('updateFleetResupplyKey', key);
-            }
-        });
-
-        document.getElementById('fleetResupplyInterval').addEventListener('change', (e) => {
-            const interval = parseInt(e.target.value, 10);
-            if (interval >= 1) {
-                callAHK('updateFleetResupplyInterval', interval);
-            } else {
-                showToast('Interval must be at least 1.');
-                e.target.value = 5;
-            }
-        });
-
-        document.getElementById('startMacro').addEventListener('click', async (e) => {
-            console.log('Start Macro clicked - DEBUG');
-            try {
-                const statusText = document.getElementById('licenseStatus').textContent;
-                const isPremium = await window.chrome.webview.hostObjects.MacroFuncs.getIsPremium().catch(() => false);
-
-                if (!isPremium && (statusText.includes('Trial Expired') || statusText.includes('Expired'))) {
-                    console.log('Trial expired (checking license status display)');
-                    showModal();
-                } else {
-                    console.log('Starting macro (not expired or premium)');
-                    callAHK('start');
-                }
-            } catch (error) {
-                console.error('Error in start macro:', error);
-                showToast('Error starting macro. Check console.');
-            }
-            e.target.blur();
-        });
-
-        document.getElementById('startAutoFleetRepair').addEventListener('click', async (e) => {
-            console.log('Start Auto Fleet Repair clicked');
-            try {
-                callAHK('startAutoFleetRepair');
-            } catch (error) {
-                console.error('Error starting auto fleet repair:', error);
-                showToast('Error starting auto fleet repair. Check console.');
-            }
-            e.target.blur();
-        });
-
-        document.getElementById('reloadMacro').addEventListener('click', (e) => {
-            callAHK('reload');
-            e.target.blur();
-        });
-
-        document.getElementById('viewStats').addEventListener('click', (e) => {
-            showStatisticsModal();
-            e.target.blur();
-        });
-
-        document.getElementById('fishTrigger').addEventListener('click', (e) => {
-            callAHK('saveFishTrigger');
-            e.target.blur();
-        });
-
-        document.getElementById('fishCaughtArea').addEventListener('click', (e) => {
-            callAHK('selectFishCaughtArea');
-            e.target.blur();
-        });
-
-        document.getElementById('fishTriggerArea').addEventListener('click', (e) => {
-            callAHK('selectFishTriggerArea');
-            e.target.blur();
-        });
-
-        document.getElementById('baitArea').addEventListener('click', (e) => {
-            callAHK('selectBaitArea');
-            e.target.blur();
-        });
-
-        document.getElementById('methodSelect').addEventListener('change', (e) => {
-            const method = e.target.value;
-            callAHK('updateMethod', method);
-        });
-
-        document.getElementById('keySelect').addEventListener('change', (e) => {
-            const key = e.target.value;
-            callAHK('updateKey', key);
-        });
-
-        document.getElementById('toggleSecondary').addEventListener('change', (e) => {
-            const secondarySelect = document.getElementById('secondaryKeySelect');
-            secondarySelect.style.display = e.target.checked ? 'block' : 'none';
-            const lureDetails = document.getElementById('autoLureDetails');
-            lureDetails.style.display = e.target.checked ? 'block' : 'none';
-            callAHK('updateToggleSecondary', e.target.checked);
-        });
-
-        document.getElementById('secondaryKeySelect').addEventListener('change', (e) => {
-            const key = e.target.value;
-            callAHK('updateSecondaryKey', key);
-        });
-
-        document.getElementById('fishTriggerConfidence').addEventListener('change', (e) => {
-            const confidence = parseInt(e.target.value, 10);
-            if (confidence >= 0 && confidence <= 100) {
-                callAHK('updateFishTriggerConfidence', confidence);
-            } else {
-                showToast('Confidence must be between 0 and 100.');
-                e.target.value = 60;
-            }
-        });
-
-        document.getElementById('keybindsToggle').addEventListener('click', (e) => {
-            const section = document.getElementById('keybindsSection');
-            section.style.display = section.style.display === 'none' ? 'block' : 'none';
-            e.target.blur();
-        });
-
-        document.getElementById('cameraAdjustKey').addEventListener('change', (e) => {
-            const key = e.target.value.trim();
-            if (key) {
-                callAHK('updateCameraAdjustKey', key);
-            }
-        });
-
-        document.getElementById('startMacroKey').addEventListener('change', (e) => {
-            const key = e.target.value.trim();
-            if (key) {
-                callAHK('updateStartMacroKey', key);
-            }
-        });
-
-        document.getElementById('reloadMacroKey').addEventListener('change', (e) => {
-            const key = e.target.value.trim();
-            if (key) {
-                callAHK('updateReloadMacroKey', key);
-            }
-        });
-
-        document.getElementById('screenshotKey').addEventListener('change', (e) => {
-            const key = e.target.value.trim();
-            if (key) {
-                callAHK('updateScreenshotKey', key);
-            }
-        });
-
-        document.getElementById('exitKey').addEventListener('change', (e) => {
-            const key = e.target.value.trim();
-            if (key) {
-                callAHK('updateExitKey', key);
-            }
-        });
-
-        document.getElementById('toggleAutoFleetRepair').addEventListener('change', (e) => {
-            callAHK('updateAutoFleetRepairEnabled', e.target.checked);
-        });
-
-        document.getElementById('autoFleetRepairKey').addEventListener('change', (e) => {
-            const key = e.target.value.trim();
-            if (key) {
-                callAHK('updateAutoFleetRepairKey', key);
-            }
-        });
-
-        document.getElementById('autoFleetRepairInterval').addEventListener('change', (e) => {
-            const interval = parseInt(e.target.value, 10);
-            if (interval >= 1) {
-                callAHK('updateAutoFleetRepairInterval', interval);
-            } else {
-                showToast('Interval must be at least 1.');
-                e.target.value = 5;
-            }
-        });
-
-        document.getElementById('toggleAutoFleetRepair').addEventListener('change', (e) => {
-            const details = document.getElementById('autoFleetRepairDetails');
-            details.style.display = e.target.checked ? 'block' : 'none';
-            callAHK('updateAutoFleetRepairEnabled', e.target.checked);
-        });
-
-        document.getElementById('autoLureInterval').addEventListener('change', (e) => {
-            const interval = parseInt(e.target.value, 10);
-            if (interval >= 1) {
-                callAHK('updateAutoLureInterval', interval);
-            } else {
-                showToast('Interval must be at least 1.');
-                e.target.value = 5;
-            }
-        });
-
-        document.getElementById('toggleDarkSeaI1').addEventListener('change', (e) => {
-            const details = document.getElementById('darkSeaI1Details');
-            details.style.display = e.target.checked ? 'block' : 'none';
-            callAHK('updateToggleDarkSeaI1', e.target.checked);
-        });
-
-        document.getElementById('darkSeaI1Key').addEventListener('change', (e) => {
-            const key = e.target.value.trim();
-            if (key) {
-                callAHK('updateDarkSeaI1Key', key);
-            }
-        });
-
-        document.getElementById('toggleSecondary').addEventListener('change', (e) => {
-            const lureGroup = document.getElementById('lureKeyGroup');
-            lureGroup.style.display = e.target.checked ? 'flex' : 'none';
-            const lureDetails = document.getElementById('autoLureDetails');
-            lureDetails.style.display = e.target.checked ? 'block' : 'none';
-            callAHK('updateToggleSecondary', e.target.checked);
-        });
-
-        async function refreshTimer() {
-            await startTrialTimer();
-        }
-
-        window.addEventListener('load', initializeUI);
-
-        async function premiumAction() {
-            const btn = document.getElementById("premiumBtn");
-            if (btn.textContent === "Remove Premium") {
-                showRemovalConfirmation();
-            } else {
-                showGoPremiumModal();
-            }
-        }
-
-        function showRemovalConfirmation() {
-            const modal = document.createElement('div');
-            modal.id = 'removalModal';
-            modal.className = 'modal';
-            modal.innerHTML = `
-            <div class="modal-content">
-                <h2>Remove Premium</h2>
-                <p>Are you sure you want to remove premium?</p>
-                <button class="unlock-btn" onclick="confirmRemoval()">Yes</button>
-                <button class="cancel-btn" onclick="closeModal('removalModal')">No</button>
-            </div>
-        `;
-            document.body.appendChild(modal);
-            modal.style.display = 'block';
-        }
-
-        async function confirmRemoval() {
-            closeModal('removalModal');
-            try {
-                const isValid = await window.chrome.webview.hostObjects.MacroFuncs.removePremium();
-                if (isValid) {
-                    showToast('Premium removed! Restarting...');
-                    window.chrome.webview.hostObjects.MacroFuncs.reload();
-                } else {
-                    showToast('Error removing premium.');
-                }
-            } catch (e) {
-                console.error('Error in confirmRemoval:', e);
-                showToast('Error removing premium. Check console for details.');
-            }
-        }
-
-        function closeModal(modalId = 'trialModal') {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.style.display = 'none';
-                modal.style.pointerEvents = 'none';
-                if (modalId === 'removalModal') {
-                    modal.remove();
-                }
-            }
-        }
-
-        function showGoPremiumModal() {
-            closeStatisticsModal();
-            document.getElementById('goPremiumModal').style.display = 'block';
-            document.getElementById('goPremiumError').style.display = 'none';
-            loadGoPremiumInfo();
-        }
-
-        async function loadGoPremiumInfo() {
-            try {
-                const serial = await window.chrome.webview.hostObjects.MacroFuncs.getAOVunoxPremiumSerial();
-                const hwid = await window.chrome.webview.hostObjects.MacroFuncs.getHWID();
-                document.getElementById('goPremiumInfo').textContent = `Serial: ${serial}\nHWID: ${hwid}`;
-            } catch (e) {
-                console.error('Error loading Go Premium info:', e);
-                document.getElementById('goPremiumInfo').textContent = 'Error loading info.';
-            }
-        }
-
-        function nextGoPremiumStep() {
-            document.getElementById('goPremiumStep1').style.display = 'none';
-            document.getElementById('goPremiumStep2').style.display = 'block';
-        }
-
-        async function activateGoPremium() {
-            const otp = document.getElementById('goPremiumOTP').value.trim();
-            if (!otp) {
-                document.getElementById('goPremiumError').textContent = 'Please enter OTP.';
-                document.getElementById('goPremiumError').style.display = 'block';
-                return;
-            }
-            try {
-                const isValid = await window.chrome.webview.hostObjects.MacroFuncs.validateOTP(otp);
-                if (isValid) {
-                    showToast('Premium activated! Restarting...');
-                    window.chrome.webview.hostObjects.MacroFuncs.reload();
-                } else {
-                    document.getElementById('goPremiumError').textContent = 'Invalid OTP. Try again.';
-                    document.getElementById('goPremiumError').style.display = 'block';
-                }
-            } catch (e) {
-                console.error('Error activating Go Premium:', e);
-                document.getElementById('goPremiumError').textContent = 'Error activating.';
-                document.getElementById('goPremiumError').style.display = 'block';
-            }
-        }
-
-        function closeGoPremiumModal() {
-            document.getElementById('goPremiumModal').style.display = 'none';
-        }
-
-        (function waitForHost() {
-            const MAX_DELAY = 20000;
-            let delay = 100;
-            let attempts = 0;
-            const toastId = 'host-connect-toast';
-
-            function createHostToast() {
-                if (document.getElementById(toastId)) return;
-                const t = document.createElement('div');
-                t.id = toastId;
-                t.style = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 16px;border-radius:6px;z-index:99999;box-shadow:0 4px 12px rgba(0,0,0,0.2);font-family:sans-serif;';
-                document.body.appendChild(t);
-            }
-            function showHostToastLocal(msg, type = 'info', duration = 1000) {
-                createHostToast();
-                const t = document.getElementById(toastId);
-                t.textContent = msg;
-                t.style.background = (type === 'error') ? '#b00020' : '#333';
-                t.style.display = 'block';
-                if (t._hideTimeout) { clearTimeout(t._hideTimeout); t._hideTimeout = null; }
-                if (type !== 'error') {
-                    t._hideTimeout = setTimeout(hideHostToastLocal, duration);
-                }
-            }
-            function hideHostToastLocal() {
-                const t = document.getElementById(toastId);
-                if (t) {
-                    t.style.display = 'none';
-                    if (t._hideTimeout) { clearTimeout(t._hideTimeout); t._hideTimeout = null; }
-                }
-            }
-            window.showHostToast = function (msg, type, duration) {
-                showHostToastLocal(msg, type, duration);
-            }
-            window.hideHostToast = hideHostToastLocal;
-
-            if (document.readyState === 'complete' || document.readyState === 'interactive') {
-                setTimeout(tryAttach, 0);
-            } else {
-                document.addEventListener('DOMContentLoaded', () => setTimeout(tryAttach, 0));
-            }
-        })();
-
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.textContent = message;
-            document.body.appendChild(toast);
-
-            setTimeout(() => toast.classList.add('show'), 10);
-
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => document.body.removeChild(toast), 300);
-            }, 500);
-        }
-
-        async function showStatisticsModal() {
-            try {
-                let isPremium = false;
-                try {
-                    isPremium = await window.chrome.webview.hostObjects.MacroFuncs.getIsPremium();
-                } catch (e) {
-                    console.error('Could not get premium status:', e);
-                    isPremium = false;
-                }
-
-                if (isPremium) {
-                    let fishCaught = 0, sunkenCaught = 0, junkCaught = 0, treasureCaught = 0;
-                    let fishTotal = 0, sunkenTotal = 0, junkTotal = 0, treasureTotal = 0;
-
-                    try {
-                        fishCaught = await window.chrome.webview.hostObjects.MacroFuncs.getSessionFish();
-                    } catch (e) { }
-                    try {
-                        sunkenCaught = await window.chrome.webview.hostObjects.MacroFuncs.getSessionSunken();
-                    } catch (e) { }
-                    try {
-                        junkCaught = await window.chrome.webview.hostObjects.MacroFuncs.getSessionJunk();
-                    } catch (e) { }
-                    try {
-                        treasureCaught = await window.chrome.webview.hostObjects.MacroFuncs.getSessionTreasure();
-                    } catch (e) { }
-                    try {
-                        fishTotal = await window.chrome.webview.hostObjects.MacroFuncs.getFishTotal();
-                    } catch (e) { }
-                    try {
-                        sunkenTotal = await window.chrome.webview.hostObjects.MacroFuncs.getSunkenTotal();
-                    } catch (e) { }
-                    try {
-                        junkTotal = await window.chrome.webview.hostObjects.MacroFuncs.getJunkTotal();
-                    } catch (e) { }
-                    try {
-                        treasureTotal = await window.chrome.webview.hostObjects.MacroFuncs.getTreasureTotal();
-                    } catch (e) { }
-
-                    document.getElementById('sessionFish').textContent = fishCaught || 0;
-                    document.getElementById('sessionSunken').textContent = sunkenCaught || 0;
-                    document.getElementById('sessionJunk').textContent = junkCaught || 0;
-                    document.getElementById('sessionTreasure').textContent = treasureCaught || 0;
-
-                    const sessionTotal = (fishCaught || 0) + (sunkenCaught || 0) + (junkCaught || 0) + (treasureCaught || 0);
-                    document.getElementById('sessionTotal').textContent = sessionTotal;
-
-                    document.getElementById('totalFish').textContent = fishTotal || 0;
-                    document.getElementById('totalSunken').textContent = sunkenTotal || 0;
-                    document.getElementById('totalJunk').textContent = junkTotal || 0;
-                    document.getElementById('totalTreasure').textContent = treasureTotal || 0;
-
-                    const grandTotal = (fishTotal || 0) + (sunkenTotal || 0) + (junkTotal || 0) + (treasureTotal || 0);
-                    document.getElementById('grandTotal').textContent = grandTotal;
-
-                    document.getElementById('premiumStatsView').style.display = 'block';
-                    document.getElementById('goPremiumStatsView').style.display = 'none';
-                } else {
-                    document.getElementById('premiumStatsView').style.display = 'none';
-                    document.getElementById('goPremiumStatsView').style.display = 'block';
-                }
-
-                document.getElementById('statisticsModal').style.display = 'block';
-            } catch (e) {
-                console.error('Error showing statistics:', e);
-                document.getElementById('goPremiumStatsView').style.display = 'block';
-                document.getElementById('premiumStatsView').style.display = 'none';
-                document.getElementById('statisticsModal').style.display = 'block';
-            }
-        }
-
-        function closeStatisticsModal() {
-            document.getElementById('statisticsModal').style.display = 'none';
-        }
-
-        function toggleSidePanel() {
-            const panel = document.getElementById('sidePanel');
-            panel.classList.toggle('open');
-        }
-
-        function closeSidePanel() {
-            const panel = document.getElementById('sidePanel');
-            panel.classList.remove('open');
-        }
-    </script>
 </body>
-
+<script src="script.js"></script>
 </html>
