@@ -332,11 +332,6 @@ let trialTimerInterval = 0;
             e.target.blur();
         });
 
-        document.getElementById('viewStats').addEventListener('click', (e) => {
-            showStatisticsModal();
-            e.target.blur();
-        });
-
         document.getElementById('fishTrigger').addEventListener('click', (e) => {
             callAHK('saveFishTrigger');
             e.target.blur();
@@ -548,7 +543,6 @@ let trialTimerInterval = 0;
         }
 
         function showGoPremiumModal() {
-            closeStatisticsModal();
             document.getElementById('goPremiumModal').style.display = 'block';
             document.getElementById('goPremiumError').style.display = 'none';
             loadGoPremiumInfo();
@@ -652,81 +646,6 @@ let trialTimerInterval = 0;
                 toast.classList.remove('show');
                 setTimeout(() => document.body.removeChild(toast), 300);
             }, 500);
-        }
-
-        async function showStatisticsModal() {
-            try {
-                let isPremium = false;
-                try {
-                    isPremium = await window.chrome.webview.hostObjects.MacroFuncs.getIsPremium();
-                } catch (e) {
-                    console.error('Could not get premium status:', e);
-                    isPremium = false;
-                }
-
-                if (isPremium) {
-                    let fishCaught = 0, sunkenCaught = 0, junkCaught = 0, treasureCaught = 0;
-                    let fishTotal = 0, sunkenTotal = 0, junkTotal = 0, treasureTotal = 0;
-
-                    try {
-                        fishCaught = await window.chrome.webview.hostObjects.MacroFuncs.getSessionFish();
-                    } catch (e) { }
-                    try {
-                        sunkenCaught = await window.chrome.webview.hostObjects.MacroFuncs.getSessionSunken();
-                    } catch (e) { }
-                    try {
-                        junkCaught = await window.chrome.webview.hostObjects.MacroFuncs.getSessionJunk();
-                    } catch (e) { }
-                    try {
-                        treasureCaught = await window.chrome.webview.hostObjects.MacroFuncs.getSessionTreasure();
-                    } catch (e) { }
-                    try {
-                        fishTotal = await window.chrome.webview.hostObjects.MacroFuncs.getFishTotal();
-                    } catch (e) { }
-                    try {
-                        sunkenTotal = await window.chrome.webview.hostObjects.MacroFuncs.getSunkenTotal();
-                    } catch (e) { }
-                    try {
-                        junkTotal = await window.chrome.webview.hostObjects.MacroFuncs.getJunkTotal();
-                    } catch (e) { }
-                    try {
-                        treasureTotal = await window.chrome.webview.hostObjects.MacroFuncs.getTreasureTotal();
-                    } catch (e) { }
-
-                    document.getElementById('sessionFish').textContent = fishCaught || 0;
-                    document.getElementById('sessionSunken').textContent = sunkenCaught || 0;
-                    document.getElementById('sessionJunk').textContent = junkCaught || 0;
-                    document.getElementById('sessionTreasure').textContent = treasureCaught || 0;
-
-                    const sessionTotal = (fishCaught || 0) + (sunkenCaught || 0) + (junkCaught || 0) + (treasureCaught || 0);
-                    document.getElementById('sessionTotal').textContent = sessionTotal;
-
-                    document.getElementById('totalFish').textContent = fishTotal || 0;
-                    document.getElementById('totalSunken').textContent = sunkenTotal || 0;
-                    document.getElementById('totalJunk').textContent = junkTotal || 0;
-                    document.getElementById('totalTreasure').textContent = treasureTotal || 0;
-
-                    const grandTotal = (fishTotal || 0) + (sunkenTotal || 0) + (junkTotal || 0) + (treasureTotal || 0);
-                    document.getElementById('grandTotal').textContent = grandTotal;
-
-                    document.getElementById('premiumStatsView').style.display = 'block';
-                    document.getElementById('goPremiumStatsView').style.display = 'none';
-                } else {
-                    document.getElementById('premiumStatsView').style.display = 'none';
-                    document.getElementById('goPremiumStatsView').style.display = 'block';
-                }
-
-                document.getElementById('statisticsModal').style.display = 'block';
-            } catch (e) {
-                console.error('Error showing statistics:', e);
-                document.getElementById('goPremiumStatsView').style.display = 'block';
-                document.getElementById('premiumStatsView').style.display = 'none';
-                document.getElementById('statisticsModal').style.display = 'block';
-            }
-        }
-
-        function closeStatisticsModal() {
-            document.getElementById('statisticsModal').style.display = 'none';
         }
 
         function toggleSidePanel() {

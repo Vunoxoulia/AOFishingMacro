@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FISHING MACRO V2.8.3</title>
+    <title>FISHING MACRO V2.9</title>
 
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -17,13 +17,10 @@
     </div>
     <div class="main-content">
         <div class="container"></div>
-        <p>FISHING MACRO V2.8.3</p>
+        <p>FISHING MACRO V2.9</p>
         <div class="button-row">
             <button class="input" id="startMacro">Start Macro</button>
             <button class="input" id="reloadMacro">Reload Macro</button>
-        </div>
-        <div class="button-row button-row-center">
-            <button class="input button-single" id="viewStats">📊 View Statistics</button>
         </div>
         <div class="input-group">
             <label for="methodSelect">Select Fishing Method:</label>
@@ -151,7 +148,7 @@
             <div class="modal-content" style="max-width: 300px;">
                 <h2>Go Premium</h2>
                 <div id="goPremiumStep1">
-                    <p>Are you sure? This will remove the timer.</p>
+                    <p>Are you sure? This will remove the timer and unlock Auto Fleet.</p>
                     <button class="unlock-btn" onclick="nextGoPremiumStep()">Yes</button>
                     <button class="cancel-btn" onclick="closeGoPremiumModal()">No</button>
                 </div>
@@ -166,89 +163,6 @@
                     <p id="goPremiumError" style="color: #ff6b6b; display: none;">Invalid OTP. Try again.</p>
                     <button class="unlock-btn" onclick="activateGoPremium()">Activate</button>
                     <button class="cancel-btn" onclick="closeGoPremiumModal()">Cancel</button>
-                </div>
-            </div>
-        </div>
-        <div id="statisticsModal" class="modal" style="display: none;">
-            <div class="modal-content">
-                <h2>📊 FISHING STATISTICS</h2>
-                <div id="statisticsContent">
-                    <div id="premiumStatsView" style="display: none;">
-                        <h3 style="color: var(--accent-cyan); margin-top: 20px; margin-bottom: 10px;">Current Session
-                        </h3>
-                        <div
-                            style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                <span>🐟 Fish</span>
-                                <span id="sessionFish" style="color: var(--accent-cyan); font-weight: bold;">0</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                <span>⚙️ Sunken Items</span>
-                                <span id="sessionSunken" style="color: var(--accent-cyan); font-weight: bold;">0</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                <span>🗑️ Junk</span>
-                                <span id="sessionJunk" style="color: var(--accent-cyan); font-weight: bold;">0</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between;">
-                                <span>💎 Treasure</span>
-                                <span id="sessionTreasure"
-                                    style="color: var(--accent-cyan); font-weight: bold;">0</span>
-                            </div>
-                            <div
-                                style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 10px; padding-top: 10px; display: flex; justify-content: space-between;">
-                                <span style="font-weight: bold;">Total Caught</span>
-                                <span id="sessionTotal" style="color: var(--accent-purple); font-weight: bold;">0</span>
-                            </div>
-                        </div>
-                        <h3 style="color: var(--accent-cyan); margin-top: 20px; margin-bottom: 10px;">Overall Total (All
-                            Sessions)</h3>
-                        <div
-                            style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                <span>🐟 Fish</span>
-                                <span id="totalFish" style="color: var(--accent-cyan); font-weight: bold;">0</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                <span>⚙️ Sunken Items</span>
-                                <span id="totalSunken" style="color: var(--accent-cyan); font-weight: bold;">0</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                <span>🗑️ Junk</span>
-                                <span id="totalJunk" style="color: var(--accent-cyan); font-weight: bold;">0</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between;">
-                                <span>💎 Treasure</span>
-                                <span id="totalTreasure" style="color: var(--accent-cyan); font-weight: bold;">0</span>
-                            </div>
-                            <div
-                                style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 10px; padding-top: 10px; display: flex; justify-content: space-between;">
-                                <span style="font-weight: bold;">Grand Total</span>
-                                <span id="grandTotal" style="color: var(--accent-purple); font-weight: bold;">0</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="goPremiumStatsView" style="text-align: center;">
-                        <p style="font-size: 16px; margin: 3px 0;">Track your fishing progress with detailed statistics!
-                        </p>
-                        <div
-                            style="background: linear-gradient(135deg, #FEBF00, #FFA500); color: #001217; padding: 15px; border-radius: 8px; margin: 20px 0; font-weight: bold;">
-                            ✨ Premium Feature ✨
-                        </div>
-                        <p>Statistics logging is exclusive to premium users. Unlock premium to:</p>
-                        <ul style="text-align: left; font-size: 13px; opacity: 0.8; margin: 15px 0;">
-                            <li>✓ Track fish, sunken items, junk, and treasures</li>
-                            <li>✓ View current session statistics</li>
-                            <li>✓ Monitor overall lifetime totals</li>
-                            <li>✓ No More Timer</li>
-                            <li>✓ Auto Fleet Repair</li>
-                        </ul>
-                        <button class="unlock-btn" onclick="premiumAction()"
-                            style="width: 100%; margin-bottom: 10px;">🔓 GO PREMIUM NOW</button>
-                    </div>
-                </div>
-                <div style="margin-top: 20px; text-align: center;">
-                    <button class="cancel-btn" onclick="closeStatisticsModal()" style="width: 100%;">Close</button>
                 </div>
             </div>
         </div>
