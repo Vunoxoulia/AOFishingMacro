@@ -88,6 +88,14 @@ let trialTimerInterval = 0;
                 fleetResupplyDetails.style.display = toggleFleetResupply ? 'block' : 'none';
                 document.getElementById('fleetResupplyGroup').style.display = isPremium ? 'block' : 'none';
 
+                const manualFleetRepairEnabled = await window.chrome.webview.hostObjects.MacroFuncs.getManualFleetRepairEnabled();
+                document.getElementById('toggleManualFleetRepair').checked = manualFleetRepairEnabled;
+                document.getElementById('repairPositionButtons').style.display = manualFleetRepairEnabled ? 'flex' : 'none';
+                
+                const manualFleetResupplyEnabled = await window.chrome.webview.hostObjects.MacroFuncs.getManualFleetResupplyEnabled();
+                document.getElementById('toggleManualFleetResupply').checked = manualFleetResupplyEnabled;
+                document.getElementById('resupplyPositionButtons').style.display = manualFleetResupplyEnabled ? 'flex' : 'none';
+
                 const toggleSoundBeep = await window.chrome.webview.hostObjects.MacroFuncs.getToggleSoundBeep();
                 document.getElementById('toggleSoundBeep').checked = toggleSoundBeep;
                 const soundBeepFrequency = await window.chrome.webview.hostObjects.MacroFuncs.getSoundBeepFrequency();
@@ -482,6 +490,18 @@ let trialTimerInterval = 0;
             const lureDetails = document.getElementById('autoLureDetails');
             lureDetails.style.display = e.target.checked ? 'block' : 'none';
             callAHK('updateToggleSecondary', e.target.checked);
+        });
+
+        document.getElementById('toggleManualFleetRepair').addEventListener('change', (e) => {
+            const buttons = document.getElementById('repairPositionButtons');
+            buttons.style.display = e.target.checked ? 'flex' : 'none';
+            callAHK('updateManualFleetRepairEnabled', e.target.checked);
+        });
+
+        document.getElementById('toggleManualFleetResupply').addEventListener('change', (e) => {
+            const buttons = document.getElementById('resupplyPositionButtons');
+            buttons.style.display = e.target.checked ? 'flex' : 'none';
+            callAHK('updateManualFleetResupplyEnabled', e.target.checked);
         });
 
         async function refreshTimer() {

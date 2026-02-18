@@ -253,7 +253,11 @@
                         <input type="number" id="autoFleetRepairInterval" class="input"
                             style="padding: 10px 0.5rem; font-size: 15px; width: 80px;" min="1" value="5">
                     </div>
-                    <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 5px;">
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 5px; margin-bottom: 5px; margin-top: 5px;">
+                        <input type="checkbox" id="toggleManualFleetRepair" style="margin-right: 5px;">
+                        <label for="toggleManualFleetRepair" style="font-size: 12px; color: #ffffff; margin: 0;">Use Manual Position Mode</label>
+                    </div>
+                    <div id="repairPositionButtons" style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 5px;">
                         <button class="input" id="setRepairPos" style="width: 120px;">"Repair" Mouse Position </button>
                         <button class="input" id="setRepairYesPos" style="width: 120px;">"Yes" Mouse Positon</button>
                     </div>
@@ -289,7 +293,11 @@
                         <input type="number" id="fleetResupplyInterval" class="input"
                             style="padding: 10px 0.5rem; font-size: 15px; width: 80px;" min="1" value="5">
                     </div>
-                    <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 5px; margin-bottom: 5px; margin-top: 5px;">
+                        <input type="checkbox" id="toggleManualFleetResupply" style="margin-right: 5px;">
+                        <label for="toggleManualFleetResupply" style="font-size: 12px; color: #ffffff; margin: 0;">Use Manual Position Mode</label>
+                    </div>
+                    <div id="resupplyPositionButtons" style="display: flex; justify-content: center; align-items: center; gap: 10px;">
                         <button class="input" id="setResupplyPos" style="width: 120px;">"Resupply" Mouse Position</button>
                         <button class="input" id="setResupplyYesPos" style="width: 120px;">"Yes" Mouse Position</button>
                     </div>
