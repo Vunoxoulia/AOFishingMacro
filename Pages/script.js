@@ -186,14 +186,12 @@ let trialTimerInterval = 0;
                     statusEl.textContent = "Status: Premium";
                     timeEl.textContent = "Time remaining: Unlimited";
                     btn.textContent = "Remove Premium";
-                    closeModal();
                 } else if (remainingSeconds > 0) {
                     statusEl.textContent = "Status: Free Trial";
                     const min = Math.floor(remainingSeconds / 60);
                     const sec = remainingSeconds % 60;
                     timeEl.textContent = "Time remaining: " + String(min).padStart(2, "0") + ":" + String(sec).padStart(2, "0");
                     btn.textContent = "Go Premium";
-                    closeModal();
                 } else {
                     statusEl.textContent = "Status: Trial Expired";
                     timeEl.textContent = "Time remaining: 00:00";
@@ -213,20 +211,6 @@ let trialTimerInterval = 0;
             });
         }
 
-        async function showModal() {
-            console.log('Showing trial modal...');
-            try {
-                const modal = document.getElementById('trialModal');
-                modal.style.display = 'block';
-                modal.style.pointerEvents = 'auto';
-                const content = modal.querySelector('.modal-content');
-                if (content) {
-                    content.style.pointerEvents = 'auto';
-                }
-            } catch (e) {
-                console.error('Error showing modal:', e);
-            }
-        }
 
         document.getElementById('toggleSoundBeep').addEventListener('change', (e) => {
             const details = document.getElementById('soundBeepDetails');
@@ -307,16 +291,8 @@ let trialTimerInterval = 0;
         document.getElementById('startMacro').addEventListener('click', async (e) => {
             console.log('Start Macro clicked - DEBUG');
             try {
-                const statusText = document.getElementById('licenseStatus').textContent;
-                const isPremium = await window.chrome.webview.hostObjects.MacroFuncs.getIsPremium().catch(() => false);
-
-                if (!isPremium && (statusText.includes('Trial Expired') || statusText.includes('Expired'))) {
-                    console.log('Trial expired (checking license status display)');
-                    showModal();
-                } else {
-                    console.log('Starting macro (not expired or premium)');
-                    callAHK('start');
-                }
+                console.log('Starting macro');
+                callAHK('start');
             } catch (error) {
                 console.error('Error in start macro:', error);
                 showToast('Error starting macro. Check console.');
@@ -551,7 +527,7 @@ let trialTimerInterval = 0;
             }
         }
 
-        function closeModal(modalId = 'trialModal') {
+        function closeModal(modalId) {
             const modal = document.getElementById(modalId);
             if (modal) {
                 modal.style.display = 'none';
